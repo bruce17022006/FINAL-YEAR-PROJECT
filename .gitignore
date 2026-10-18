@@ -1,0 +1,20 @@
+# Virtual Environment
+my_env/
+
+# Datasets and Archives
+Data/
+dev-clean.tar.gz
+*.mp3
+*.wav
+*.flac
+
+# Precomputed Tensors & Heavy Checkpoints (>100MB)
+precomputed_pbkd_dev_clean/
+checkpoints_stage1/
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# Temporary text dumps
+train_transcripts.txt
