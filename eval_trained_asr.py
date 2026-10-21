@@ -5,10 +5,13 @@ import torch
 import torchaudio
 import sentencepiece as spm
 from train_stage1_asr import (
-    StudentAcousticModel, 
-    DATA_DIR, 
-    TOKENIZER_MODEL, 
+    StudentAcousticModel,
+    TOKENIZER_MODEL,
     CHECKPOINT_DIR
+)
+
+DATA_DIR = os.path.join(
+    "Data", "train-clean-100", "LibriSpeech", "train-clean-100"
 )
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"

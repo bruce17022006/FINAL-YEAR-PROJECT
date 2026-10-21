@@ -11,6 +11,7 @@ dev-clean.tar.gz
 # Precomputed Tensors & Heavy Checkpoints (>100MB)
 precomputed_pbkd_dev_clean/
 checkpoints_stage1/
+precomputed_pbkd_train_clean/
 
 # Python Cache
 __pycache__/
