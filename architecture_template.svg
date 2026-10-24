@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1380 560" width="100%" height="100%">
+  <defs>
+    <!-- Standard Draw.io Black Arrowhead -->
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#000000"/>
+    </marker>
+  </defs>
+
+  <style>
+    .title-text { font-family: Helvetica, Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #000000; }
+    .box-text { font-family: Helvetica, Arial, sans-serif; font-size: 11px; fill: #000000; text-anchor: middle; line-height: 1.35; }
+    .box-text-left { font-family: Helvetica, Arial, sans-serif; font-size: 11px; fill: #000000; text-anchor: start; line-height: 1.35; }
+    .label-text { font-family: Helvetica, Arial, sans-serif; font-size: 10px; fill: #000000; text-anchor: middle; background-color: #ffffff; }
+  </style>
+
+  <!-- Pure White Background -->
+  <rect x="0" y="0" width="1380" height="560" fill="#ffffff"/>
+
+  <!-- Outer Rounded Border (Draw.io Container Template) -->
+  <rect x="15" y="15" width="1350" height="530" rx="36" ry="36" fill="#ffffff" stroke="#000000" stroke-width="1.2"/>
+
+  <!-- Top Center Header -->
+  <text x="690" y="48" text-anchor="middle" class="title-text">Dynamic Knowledge Distillation Transfer</text>
+
+  <!-- ==================== BOXES ==================== -->
+
+  <!-- Box 1: Dataset -->
+  <rect x="50" y="65" width="115" height="52" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="107" y="83" class="box-text">Dataset</text>
+  <text x="107" y="97" class="box-text">IEMOCAP and</text>
+  <text x="107" y="111" class="box-text">Librispeech</text>
+
+  <!-- Box 2: Audio Wave -->
+  <rect x="50" y="165" width="115" height="52" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="107" y="195" class="box-text">Audio Wave</text>
+
+  <!-- Box 3: Input Transcript -->
+  <rect x="50" y="275" width="115" height="52" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="107" y="305" class="box-text">Input Transcript</text>
+
+  <!-- Box 4: Conformer Student Model -->
+  <rect x="235" y="165" width="135" height="65" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="302" y="185" class="box-text">Conformer based</text>
+  <text x="302" y="199" class="box-text">Encoder- Decoder</text>
+  <text x="302" y="213" class="box-text">Model</text>
+  <text x="302" y="226" class="box-text">(Student)</text>
+
+  <!-- Box 5: Dialogue Segmentation -->
+  <rect x="235" y="275" width="135" height="55" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="302" y="295" class="box-text">1) Dialogue</text>
+  <text x="302" y="309" class="box-text">Segmentation</text>
+  <text x="302" y="323" class="box-text">2) Human Annotation</text>
+
+  <!-- Box 6: LoRA Adaptation LLaMA (Rounded Box) -->
+  <rect x="430" y="275" width="130" height="55" rx="8" ry="8" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="495" y="297" class="box-text">LoRA Adaptation</text>
+  <text x="495" y="311" class="box-text">Llama 3.2 1B</text>
+  <text x="495" y="324" class="box-text">Model</text>
+
+  <!-- Box 7: Pseudo Bidirectional Approach -->
+  <rect x="430" y="380" width="130" height="55" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="495" y="401" class="box-text">Pseudo Bidirectional</text>
+  <text x="495" y="416" class="box-text">Approach</text>
+  <text x="495" y="429" class="box-text">sequence length L' =8</text>
+
+  <!-- Box 8: Sinkhorn Optimal Transport Plan -->
+  <rect x="625" y="130" width="145" height="105" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="697" y="149" class="box-text">Sinkhorn Based Optimal</text>
+  <text x="697" y="163" class="box-text">Transport Plan</text>
+  <text x="697" y="177" class="box-text">Many to Many Token</text>
+  <text x="697" y="191" class="box-text">Mapping</text>
+  <text x="697" y="209" class="box-text">1) Ground Cost Matrix</text>
+  <text x="697" y="224" class="box-text">2) Top -K candidates</text>
+
+  <!-- Box 9: ASR Result Predicted Token -->
+  <rect x="835" y="155" width="115" height="55" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="892" y="180" class="box-text">ASR Result</text>
+  <text x="892" y="196" class="box-text">predicted Token</text>
+
+  <!-- Box 10: Speech Emotion Recognition Head (Integrated Cleanly) -->
+  <rect x="835" y="240" width="115" height="55" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="892" y="260" class="box-text">Speech Emotion</text>
+  <text x="892" y="274" class="box-text">Recognition Head</text>
+  <text x="892" y="288" class="box-text">(Temporal Pooling)</text>
+
+  <!-- Box 11: Wasserstein Optimal Transport Loss -->
+  <rect x="615" y="320" width="165" height="50" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="697" y="342" class="box-text">Wasserstein Optimal</text>
+  <text x="697" y="356" class="box-text">Transport Loss</text>
+
+  <!-- Box 12: Total Loss L -->
+  <rect x="835" y="320" width="115" height="50" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="892" y="349" class="box-text">Total Loss L</text>
+
+  <!-- Box 13: Evaluation Metrics -->
+  <rect x="1015" y="150" width="125" height="145" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="1077" y="170" class="box-text">Evaluation Metrics</text>
+  <text x="1030" y="196" class="box-text-left">1) CER</text>
+  <text x="1030" y="214" class="box-text-left">2) WER</text>
+  <text x="1030" y="232" class="box-text-left">3) Weighted Accuracy</text>
+  <text x="1030" y="250" class="box-text-left">4) Unweighted</text>
+  <text x="1042" y="264" class="box-text-left">Accuracy</text>
+  <text x="1030" y="282" class="box-text-left">5) CTC Loss</text>
+
+  <!-- Box 14: Output -->
+  <rect x="1195" y="175" width="115" height="95" fill="#ffffff" stroke="#000000" stroke-width="1"/>
+  <text x="1252" y="200" class="box-text">Output</text>
+  <text x="1210" y="226" class="box-text-left">1) Recognized</text>
+  <text x="1225" y="240" class="box-text-left">Speech</text>
+  <text x="1210" y="258" class="box-text-left">2) Emotion Label</text>
+
+
+  <!-- ==================== CONNECTING ARROWS ==================== -->
+
+  <!-- Arrow: Dataset -> Audio Wave -->
+  <path d="M 107 117 L 107 165" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Audio Wave -> Input Transcript -->
+  <path d="M 107 217 L 107 275" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Audio Wave -> Conformer (Corrected label: Raw Audio) -->
+  <path d="M 165 191 L 235 191" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="175" y="184" width="50" height="14" fill="#ffffff"/>
+  <text x="200" y="195" class="label-text">Raw Audio</text>
+
+  <!-- Arrow: Input Transcript -> Dialogue Segmentation -->
+  <path d="M 165 301 L 235 301" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="175" y="294" width="50" height="14" fill="#ffffff"/>
+  <text x="200" y="305" class="label-text">Raw Text</text>
+
+  <!-- Arrow: Dialogue Segmentation -> LoRA LLaMA -->
+  <path d="M 370 302 L 430 302" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Pseudo Bidirectional -> LoRA LLaMA -->
+  <path d="M 495 380 L 495 330" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Conformer -> Sinkhorn Plan (Audio Embeddings) -->
+  <path d="M 370 185 L 625 185" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="430" y="177" width="105" height="15" fill="#ffffff"/>
+  <text x="482" y="188" class="label-text">Audio Embeddings</text>
+
+  <!-- Arrow: LoRA LLaMA -> Sinkhorn Plan (Text Embeddings) -->
+  <path d="M 560 302 L 585 302 L 585 205 L 625 205" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="545" y="245" width="80" height="15" fill="#ffffff"/>
+  <text x="585" y="256" class="label-text">Text Embeddings</text>
+
+  <!-- Arrow: Conformer -> Emotion Head -->
+  <path d="M 370 215 L 400 215 L 400 267 L 835 267" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Sinkhorn Plan -> ASR Result -->
+  <path d="M 770 182 L 835 182" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Sinkhorn Plan -> Wasserstein Loss -->
+  <path d="M 697 235 L 697 320" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: ASR Result -> Total Loss L -->
+  <path d="M 892 210 L 892 320" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Emotion Head -> Total Loss L -->
+  <path d="M 925 295 L 925 320" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow: Wasserstein Loss -> Total Loss L -->
+  <path d="M 780 345 L 835 345" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Backpropagation Arrow: Total Loss L -> Conformer (Updation of ASR weights Only) -->
+  <path d="M 835 360 L 302 360 L 302 230" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="530" y="352" width="150" height="15" fill="#ffffff"/>
+  <text x="605" y="363" class="label-text">Updation of ASR weights Only</text>
+
+  <!-- Arrow: Total Loss L -> Evaluation Metrics (Minimize Loss) -->
+  <path d="M 950 345 L 1077 345 L 1077 295" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="980" y="337" width="80" height="15" fill="#ffffff"/>
+  <text x="1020" y="348" class="label-text">Minimize Loss</text>
+
+  <!-- Arrow: Evaluation Metrics -> Output -->
+  <path d="M 1140 222 L 1195 222" stroke="#000000" stroke-width="1" marker-end="url(#arrow)"/>
+</svg>

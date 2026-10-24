@@ -1,0 +1,268 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 680" width="100%" height="100%">
+  <defs>
+    <!-- Card Gradients & Pastel Tints (IEEE Transactions Scholarly Style) -->
+    <linearGradient id="cardBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0f7ff"/>
+    </linearGradient>
+    <linearGradient id="cardPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#faf5ff"/>
+    </linearGradient>
+    <linearGradient id="cardAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fffdf5"/>
+    </linearGradient>
+    <linearGradient id="cardGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f0fdf4"/>
+    </linearGradient>
+    <linearGradient id="cardRose" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fff1f2"/>
+    </linearGradient>
+    <linearGradient id="cardSlate" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+
+    <!-- Subtle Publication Drop Shadow -->
+    <filter id="ieeeShadow" x="-3%" y="-4%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+
+    <!-- Scholarly Arrowheads -->
+    <marker id="arrBlack" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arrRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#be123c"/>
+    </marker>
+  </defs>
+
+  <style>
+    .ieee-title { font-family: 'Times New Roman', Times, serif; font-size: 17px; font-weight: bold; fill: #0f172a; letter-spacing: 0.3px; }
+    .ieee-caption { font-family: 'Times New Roman', Times, serif; font-size: 13px; font-style: italic; fill: #475569; }
+    .box-header { font-family: 'Times New Roman', Times, serif; font-size: 12.5px; font-weight: bold; fill: #0f172a; }
+    .box-text { font-family: 'Times New Roman', Times, serif; font-size: 11.5px; fill: #1e293b; text-anchor: middle; line-height: 1.35; }
+    .box-text-left { font-family: 'Times New Roman', Times, serif; font-size: 11.5px; fill: #1e293b; text-anchor: start; line-height: 1.4; }
+    .pill-label { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 9.5px; font-weight: 600; fill: #1e293b; text-anchor: middle; }
+    .math-symbol { font-family: 'Times New Roman', Times, serif; font-style: italic; }
+  </style>
+
+  <!-- Clean Canvas Background -->
+  <rect x="0" y="0" width="1560" height="680" fill="#ffffff"/>
+
+  <!-- Outer Rounded Container (Exact Template Boundary with IEEE Refined Border) -->
+  <rect x="15" y="15" width="1530" height="615" rx="36" ry="36" fill="#ffffff" stroke="#334155" stroke-width="1.6" filter="url(#ieeeShadow)"/>
+
+  <!-- Top Title Banner -->
+  <text x="780" y="48" text-anchor="middle" class="ieee-title">Dynamic Knowledge Distillation Transfer for Multimodal Speech Recognition and Emotion Classification</text>
+  <line x1="400" y1="56" x2="1160" y2="56" stroke="#94a3b8" stroke-width="0.8" stroke-dasharray="3,3"/>
+
+  <!-- ==================== COLUMN 1: DATASET INGESTION ==================== -->
+  <!-- Box 1: Dataset -->
+  <g transform="translate(45, 80)">
+    <rect width="130" height="65" rx="4" fill="url(#cardSlate)" stroke="#475569" stroke-width="1.2" filter="url(#ieeeShadow)"/>
+    <text x="65" y="22" class="box-text" font-weight="bold">Dataset</text>
+    <text x="65" y="38" class="box-text">IEMOCAP and</text>
+    <text x="65" y="52" class="box-text">LibriSpeech</text>
+  </g>
+
+  <!-- Box 2: Audio Wave -->
+  <g transform="translate(45, 205)">
+    <rect width="130" height="60" rx="4" fill="url(#cardBlue)" stroke="#2563eb" stroke-width="1.4" filter="url(#ieeeShadow)"/>
+    <text x="65" y="28" class="box-text" font-weight="bold" fill="#1e3a8a">Audio Wave</text>
+    <text x="65" y="46" class="box-text" font-size="10.5" fill="#475569">16 kHz Mono WAV</text>
+  </g>
+
+  <!-- Box 3: Input Transcript -->
+  <g transform="translate(45, 335)">
+    <rect width="130" height="60" rx="4" fill="url(#cardPurple)" stroke="#9333ea" stroke-width="1.4" filter="url(#ieeeShadow)"/>
+    <text x="65" y="28" class="box-text" font-weight="bold" fill="#581c87">Input Transcript</text>
+    <text x="65" y="46" class="box-text" font-size="10.5" fill="#475569">Reference Texts</text>
+  </g>
+
+  <!-- ==================== COLUMN 2: ENCODER BACKBONES ==================== -->
+  <!-- Box 4: Conformer Student Model -->
+  <g transform="translate(255, 195)">
+    <rect width="160" height="85" rx="5" fill="url(#cardBlue)" stroke="#1d4ed8" stroke-width="1.6" filter="url(#ieeeShadow)"/>
+    <rect x="0" y="0" width="160" height="20" fill="#dbeafe" rx="4"/>
+    <text x="80" y="14" class="box-text" font-weight="bold" fill="#1e40af">Student Model (ASR)</text>
+    <text x="80" y="36" class="box-text">Conformer-based</text>
+    <text x="80" y="51" class="box-text">Encoder-Decoder Model</text>
+    <text x="80" y="66" class="box-text">(4&times; Subsampling, 6 Layers)</text>
+    <text x="80" y="79" class="box-text" font-size="10" fill="#475569"><tspan class="math-symbol">&theta;</tspan><tspan font-size="9">_S</tspan> (Trainable Weights)</text>
+  </g>
+
+  <!-- Box 5: Dialogue Segmentation -->
+  <g transform="translate(255, 335)">
+    <rect width="160" height="60" rx="4" fill="url(#cardPurple)" stroke="#7e22ce" stroke-width="1.4" filter="url(#ieeeShadow)"/>
+    <text x="80" y="25" class="box-text">1) Dialogue Segmentation</text>
+    <text x="80" y="44" class="box-text">2) Human Annotation</text>
+  </g>
+
+  <!-- Box 6: LoRA Adaptation LLaMA (Rounded Teacher Box) -->
+  <g transform="translate(470, 330)">
+    <rect width="155" height="70" rx="14" ry="14" fill="url(#cardPurple)" stroke="#7e22ce" stroke-width="1.6" filter="url(#ieeeShadow)"/>
+    <rect x="0" y="0" width="155" height="18" fill="#f3e8ff" rx="10"/>
+    <text x="77" y="13" class="box-text" font-weight="bold" fill="#6b21a8">Frozen Semantic Teacher</text>
+    <text x="77" y="35" class="box-text">LoRA Adaptation</text>
+    <text x="77" y="49" class="box-text">LLaMA-3.2-1B Model</text>
+    <text x="77" y="63" class="box-text" font-size="10" fill="#6b21a8">(2048-dim Embeddings)</text>
+  </g>
+
+  <!-- Box 7: Pseudo Bidirectional Approach -->
+  <g transform="translate(470, 455)">
+    <rect width="155" height="60" rx="4" fill="url(#cardPurple)" stroke="#a855f7" stroke-width="1.2" filter="url(#ieeeShadow)"/>
+    <text x="77" y="22" class="box-text">Pseudo Bidirectional</text>
+    <text x="77" y="37" class="box-text">Approach</text>
+    <text x="77" y="52" class="box-text">Sequence Length <tspan class="math-symbol">L'</tspan> = 8</text>
+  </g>
+
+  <!-- ==================== COLUMN 3: OPTIMAL TRANSPORT DISTILLATION ==================== -->
+  <!-- Box 8: Sinkhorn Based Optimal Transport Plan -->
+  <g transform="translate(685, 140)">
+    <rect width="180" height="135" rx="6" fill="url(#cardAmber)" stroke="#b45309" stroke-width="1.6" filter="url(#ieeeShadow)"/>
+    <rect x="0" y="0" width="180" height="20" fill="#fef3c7" rx="4"/>
+    <text x="90" y="14" class="box-text" font-weight="bold" fill="#92400e">Core Distillation Engine</text>
+    <text x="90" y="36" class="box-text" font-weight="bold">Sinkhorn-Based Optimal</text>
+    <text x="90" y="50" class="box-text" font-weight="bold">Transport Plan</text>
+    <text x="90" y="66" class="box-text">Many-to-Many Token Mapping</text>
+    <line x1="20" y1="74" x2="160" y2="74" stroke="#fde68a" stroke-width="1"/>
+    <text x="90" y="89" class="box-text">1) Ground Cost Matrix <tspan class="math-symbol">C</tspan></text>
+    <text x="90" y="104" class="box-text">2) Top-<tspan class="math-symbol">K</tspan> Candidate Selection</text>
+    <text x="90" y="122" class="box-text" font-size="10.5" fill="#78350f">Entropic Regularization <tspan class="math-symbol">&epsilon;</tspan></text>
+  </g>
+
+  <!-- Box 11: Wasserstein Optimal Transport Loss -->
+  <g transform="translate(685, 385)">
+    <rect width="180" height="55" rx="4" fill="url(#cardAmber)" stroke="#d97706" stroke-width="1.4" filter="url(#ieeeShadow)"/>
+    <text x="90" y="24" class="box-text" font-weight="bold">Wasserstein Optimal</text>
+    <text x="90" y="40" class="box-text" font-weight="bold">Transport Loss (<tspan class="math-symbol">L</tspan><tspan font-size="9">_OT</tspan>)</text>
+  </g>
+
+  <!-- ==================== COLUMN 4: DUAL HEADS & LOSS ==================== -->
+  <!-- Box 9: ASR Result predicted Token -->
+  <g transform="translate(930, 160)">
+    <rect width="140" height="60" rx="4" fill="url(#cardBlue)" stroke="#2563eb" stroke-width="1.4" filter="url(#ieeeShadow)"/>
+    <text x="70" y="27" class="box-text" font-weight="bold">ASR Result</text>
+    <text x="70" y="44" class="box-text">Predicted Tokens (<tspan class="math-symbol">Y&#770;</tspan>)</text>
+  </g>
+
+  <!-- Box 10: Speech Emotion Recognition Head (NEW Clean Addition) -->
+  <g transform="translate(930, 260)">
+    <rect width="140" height="60" rx="4" fill="url(#cardGreen)" stroke="#059669" stroke-width="1.4" filter="url(#ieeeShadow)"/>
+    <text x="70" y="24" class="box-text" font-weight="bold" fill="#065f46">Speech Emotion</text>
+    <text x="70" y="39" class="box-text" font-weight="bold" fill="#065f46">Recognition Head</text>
+    <text x="70" y="52" class="box-text" font-size="10" fill="#047857">(Temporal Pooling + MLP)</text>
+  </g>
+
+  <!-- Box 12: Total Joint Loss L -->
+  <g transform="translate(930, 385)">
+    <rect width="140" height="65" rx="5" fill="url(#cardRose)" stroke="#e11d48" stroke-width="1.6" filter="url(#ieeeShadow)"/>
+    <rect x="0" y="0" width="140" height="18" fill="#ffe4e6" rx="4"/>
+    <text x="70" y="13" class="box-text" font-weight="bold" fill="#9f1239">Joint Objective</text>
+    <text x="70" y="35" class="box-text" font-weight="bold">Total Loss <tspan class="math-symbol">L</tspan></text>
+    <text x="70" y="51" class="box-text" font-size="10.5"><tspan class="math-symbol">L</tspan><tspan font-size="8">_CTC</tspan> + <tspan class="math-symbol">&lambda;</tspan><tspan font-size="8">_OT</tspan><tspan class="math-symbol">L</tspan><tspan font-size="8">_OT</tspan> + <tspan class="math-symbol">&lambda;</tspan><tspan font-size="8">_e</tspan><tspan class="math-symbol">L</tspan><tspan font-size="8">_Emo</tspan></text>
+  </g>
+
+  <!-- ==================== COLUMN 5: EVALUATION & SYSTEM OUTPUTS ==================== -->
+  <!-- Box 13: Evaluation Metrics -->
+  <g transform="translate(1130, 160)">
+    <rect width="155" height="170" rx="5" fill="url(#cardSlate)" stroke="#475569" stroke-width="1.4" filter="url(#ieeeShadow)"/>
+    <rect x="0" y="0" width="155" height="20" fill="#f1f5f9" rx="4"/>
+    <text x="77" y="14" class="box-text" font-weight="bold" fill="#334155">Evaluation Metrics</text>
+    
+    <text x="16" y="40" class="box-text-left" font-weight="bold" fill="#1e40af">ASR Criteria:</text>
+    <text x="24" y="58" class="box-text-left">1) CER (%)</text>
+    <text x="24" y="76" class="box-text-left">2) WER (%)</text>
+    <text x="24" y="94" class="box-text-left">3) CTC Loss</text>
+    
+    <text x="16" y="118" class="box-text-left" font-weight="bold" fill="#065f46">SER Criteria:</text>
+    <text x="24" y="136" class="box-text-left">4) Weighted Acc (WA)</text>
+    <text x="24" y="154" class="box-text-left">5) Unweighted Acc (UA)</text>
+  </g>
+
+  <!-- Box 14: Final System Output -->
+  <g transform="translate(1345, 195)">
+    <rect width="150" height="105" rx="6" fill="url(#cardBlue)" stroke="#2563eb" stroke-width="1.8" filter="url(#ieeeShadow)"/>
+    <rect x="0" y="0" width="150" height="22" fill="#dbeafe" rx="4"/>
+    <text x="75" y="15" class="box-text" font-weight="bold" fill="#1e3a8a">System Output</text>
+    
+    <text x="16" y="44" class="box-text-left" font-weight="bold" fill="#1e3a8a">1) Recognized</text>
+    <text x="32" y="60" class="box-text-left" fill="#1e40af">Speech Text</text>
+    
+    <text x="16" y="82" class="box-text-left" font-weight="bold" fill="#065f46">2) Emotion Label</text>
+    <text x="32" y="96" class="box-text-left" font-size="10.5" fill="#047857">(Ang/Hap/Sad/Neu)</text>
+  </g>
+
+
+  <!-- ==================== CONNECTING PATHWAYS & PILL BADGES ==================== -->
+  
+  <!-- Pathway 1: Dataset -> Audio Wave -->
+  <path d="M 110 145 L 110 205" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 2: Audio Wave -> Input Transcript -->
+  <path d="M 110 265 L 110 335" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 3: Audio Wave -> Conformer (Raw Audio Waveform) -->
+  <path d="M 175 235 L 255 235" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+  <rect x="186" y="226" width="58" height="16" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.8"/>
+  <text x="215" y="238" class="pill-label" fill="#1e40af">Raw Audio</text>
+
+  <!-- Pathway 4: Transcript -> Dialogue Segmentation (Raw Text) -->
+  <path d="M 175 365 L 255 365" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+  <rect x="188" y="356" width="54" height="16" rx="4" fill="#faf5ff" stroke="#e9d5ff" stroke-width="0.8"/>
+  <text x="215" y="368" class="pill-label" fill="#6b21a8">Raw Text</text>
+
+  <!-- Pathway 5: Dialogue Segmentation -> LoRA LLaMA -->
+  <path d="M 415 365 L 470 365" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 6: Pseudo Bidirectional -> LoRA LLaMA -->
+  <path d="M 547 455 L 547 400" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 7: Conformer -> Sinkhorn Plan (Audio Embeddings) -->
+  <path d="M 415 215 L 685 215" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+  <rect x="500" y="206" width="98" height="17" rx="4" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.8"/>
+  <text x="549" y="218" class="pill-label" fill="#1d4ed8">Audio Embeddings</text>
+
+  <!-- Pathway 8: LoRA LLaMA -> Sinkhorn Plan (Text Embeddings) -->
+  <path d="M 625 365 L 655 365 L 655 240 L 685 240" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+  <rect x="612" y="292" width="86" height="17" rx="4" fill="#faf5ff" stroke="#e9d5ff" stroke-width="0.8"/>
+  <text x="655" y="304" class="pill-label" fill="#6b21a8">Text Embeddings</text>
+
+  <!-- Pathway 9: Conformer -> Emotion Head -->
+  <path d="M 415 250 L 445 250 L 445 290 L 930 290" stroke="#059669" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 10: Sinkhorn Plan -> ASR Result -->
+  <path d="M 865 190 L 930 190" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 11: Sinkhorn Plan -> Wasserstein Loss -->
+  <path d="M 775 275 L 775 385" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 12: ASR Result -> Total Loss L -->
+  <path d="M 1000 220 L 1000 385" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 13: Emotion Head -> Total Loss L -->
+  <path d="M 1040 320 L 1040 385" stroke="#059669" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 14: Wasserstein Loss -> Total Loss L -->
+  <path d="M 865 415 L 930 415" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Pathway 15: Total Loss L -> Conformer Backpropagation (Updation of ASR weights Only) -->
+  <path d="M 930 435 L 335 435 L 335 280" stroke="#be123c" stroke-width="1.8" stroke-dasharray="5,4" marker-end="url(#arrRed)"/>
+  <rect x="560" y="426" width="168" height="18" rx="4" fill="#fff1f2" stroke="#fecdd3" stroke-width="0.8"/>
+  <text x="644" y="439" class="pill-label" fill="#be123c">Updation of ASR Weights Only</text>
+
+  <!-- Pathway 16: Total Loss L -> Evaluation Metrics (Minimize Loss) -->
+  <path d="M 1070 415 L 1207 415 L 1207 330" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+  <rect x="1100" y="406" width="80" height="17" rx="4" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+  <text x="1140" y="418" class="pill-label" fill="#334155">Minimize Loss</text>
+
+  <!-- Pathway 17: Evaluation Metrics -> Output -->
+  <path d="M 1285 245 L 1345 245" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arrBlack)"/>
+
+  <!-- Scholarly Figure Caption at Bottom (Standard IEEE Format) -->
+  <text x="780" y="655" text-anchor="middle" class="ieee-caption">Fig. 1. End-to-end architectural framework of the proposed Dynamic Knowledge Distillation Transfer system integrating Conformer ASR, frozen LLaMA-3.2-1B, Sinkhorn Optimal Transport, and Speech Emotion Recognition.</text>
+</svg>

@@ -3,6 +3,7 @@ my_env/
 
 # Datasets and Archives
 Data/
+IEMOCAP_full_release_withoutVideos/
 dev-clean.tar.gz
 *.mp3
 *.wav

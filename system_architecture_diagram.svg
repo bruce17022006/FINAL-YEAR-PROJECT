@@ -1,0 +1,396 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 860" width="100%" height="100%">
+  <defs>
+    <!-- Card Gradients (Light & Vibrant for Journal & Presentation) -->
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eff6ff"/>
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#faf5ff"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fffbeb"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#ecfdf5"/>
+    </linearGradient>
+    <linearGradient id="roseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fff1f2"/>
+    </linearGradient>
+    <linearGradient id="indigoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eef2ff"/>
+    </linearGradient>
+    <linearGradient id="slateGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+
+    <!-- Header Gradients -->
+    <linearGradient id="headerBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="headerPurple" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7e22ce"/>
+      <stop offset="100%" stop-color="#9333ea"/>
+    </linearGradient>
+    <linearGradient id="headerAmber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="headerEmerald" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="headerRose" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#e11d48"/>
+      <stop offset="100%" stop-color="#f43f5e"/>
+    </linearGradient>
+    <linearGradient id="headerIndigo" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+
+    <!-- Soft Drop Shadows -->
+    <filter id="softShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.08"/>
+    </filter>
+    <filter id="highlightShadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#2563eb" flood-opacity="0.15"/>
+    </filter>
+
+    <!-- Marker Arrow Heads (Vibrant Colors) -->
+    <marker id="arrBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#9333ea"/>
+    </marker>
+    <marker id="arrAmber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#d97706"/>
+    </marker>
+    <marker id="arrEmerald" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#059669"/>
+    </marker>
+    <marker id="arrRose" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#e11d48"/>
+    </marker>
+    <marker id="arrSlate" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <style>
+    .main-title { font-family: 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 25px; font-weight: 800; fill: #0f172a; }
+    .sub-title { font-family: 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 13px; font-weight: 500; fill: #475569; }
+    .card-title { font-family: 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 14px; font-weight: 700; }
+    .card-body { font-family: 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 12px; font-weight: 500; fill: #334155; }
+    .card-sub { font-family: 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 11px; font-weight: 400; fill: #64748b; }
+    .badge-text { font-family: 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 10px; font-weight: 700; fill: #ffffff; text-anchor: middle; letter-spacing: 0.5px; }
+    .wire-label { font-family: 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 11px; font-weight: 600; }
+  </style>
+
+  <!-- Canvas Background (Clean White for Papers & Word/LaTeX Docs) -->
+  <rect x="0" y="0" width="1520" height="860" fill="#ffffff"/>
+  
+  <!-- Outer Styled Frame -->
+  <rect x="15" y="15" width="1490" height="830" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" filter="url(#softShadow)"/>
+
+  <!-- Top Title Banner -->
+  <rect x="15" y="15" width="1490" height="75" rx="20" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="760" y="46" text-anchor="middle" class="main-title">Cross-Vocabulary Dynamic Knowledge Distillation &amp; Multimodal ASR + SER Architecture</text>
+  <text x="760" y="68" text-anchor="middle" class="sub-title">Acoustic Conformer Student &bull; LLaMA-3.2-1B Semantic Teacher &bull; Sinkhorn Optimal Transport &bull; Joint Speech &amp; Emotion Recognition</text>
+
+  <!-- ========================================================
+       COLUMN 1: MULTIMODAL DATASET INGESTION
+       ======================================================== -->
+  <!-- Container Zone Background -->
+  <rect x="35" y="110" width="190" height="580" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="130" y="132" text-anchor="middle" font-family="'Segoe UI', Inter, sans-serif" font-size="12" font-weight="700" fill="#475569">1. DATASET SOURCES</text>
+
+  <!-- Box 1A: Dataset Sources -->
+  <g transform="translate(45, 145)">
+    <rect width="170" height="90" rx="12" fill="url(#slateGrad)" stroke="#94a3b8" stroke-width="1.5" filter="url(#softShadow)"/>
+    <rect x="15" y="-8" width="140" height="18" rx="9" fill="#64748b"/>
+    <text x="85" y="5" class="badge-text">DATASETS</text>
+    <text x="85" y="30" text-anchor="middle" class="card-title" fill="#0f172a">Corpus Inputs</text>
+    <text x="85" y="52" text-anchor="middle" class="card-body">&bull; LibriSpeech (16kHz)</text>
+    <text x="85" y="70" text-anchor="middle" class="card-body">&bull; IEMOCAP (Sessions 1-5)</text>
+  </g>
+
+  <!-- Arrow: Dataset -> Audio -->
+  <path d="M 130 235 L 130 280" stroke="#2563eb" stroke-width="2" marker-end="url(#arrBlue)"/>
+
+  <!-- Box 1B: Audio Waveform -->
+  <g transform="translate(45, 280)">
+    <rect width="170" height="90" rx="12" fill="url(#blueGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#softShadow)"/>
+    <rect x="25" y="-8" width="120" height="18" rx="9" fill="url(#headerBlue)"/>
+    <text x="85" y="5" class="badge-text">ACOUSTIC INPUT</text>
+    <text x="85" y="30" text-anchor="middle" class="card-title" fill="#1e3a8a">Raw Audio Wave</text>
+    <text x="85" y="50" text-anchor="middle" class="card-body">16,000 Hz Mono WAV</text>
+    <text x="85" y="68" text-anchor="middle" class="card-sub">Dynamic Normalization</text>
+  </g>
+
+  <!-- Arrow: Audio -> Transcript (Ground Truth alignment) -->
+  <path d="M 130 370 L 130 430" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrSlate)"/>
+  <text x="135" y="405" class="wire-label" fill="#64748b">Paired Pair</text>
+
+  <!-- Box 1C: Transcript & Ground Truth -->
+  <g transform="translate(45, 430)">
+    <rect width="170" height="90" rx="12" fill="url(#purpleGrad)" stroke="#a855f7" stroke-width="2" filter="url(#softShadow)"/>
+    <rect x="25" y="-8" width="120" height="18" rx="9" fill="url(#headerPurple)"/>
+    <text x="85" y="5" class="badge-text">GROUND TRUTH</text>
+    <text x="85" y="30" text-anchor="middle" class="card-title" fill="#581c87">Input Transcripts</text>
+    <text x="85" y="50" text-anchor="middle" class="card-body">Normalized Dialogue</text>
+    <text x="85" y="68" text-anchor="middle" class="card-sub">&amp; Emotion Annotations</text>
+  </g>
+
+
+  <!-- ========================================================
+       COLUMN 2: ACOUSTIC STUDENT & SEMANTIC TEACHER
+       ======================================================== -->
+  <!-- Wire: Audio -> Conformer (Log-Mel) -->
+  <path d="M 215 325 L 295 325" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrBlue)"/>
+  <text x="255" y="315" text-anchor="middle" class="wire-label" fill="#2563eb">Log-Mel Specs</text>
+  <text x="255" y="338" text-anchor="middle" class="card-sub">(80 Bins)</text>
+
+  <!-- Box 2A: Conformer Student Model -->
+  <g transform="translate(295, 205)">
+    <rect width="230" height="230" rx="16" fill="url(#blueGrad)" stroke="#2563eb" stroke-width="2.5" filter="url(#highlightShadow)"/>
+    <rect x="25" y="-11" width="180" height="22" rx="11" fill="url(#headerBlue)"/>
+    <text x="115" y="5" class="badge-text">STUDENT MODEL (TRAINABLE)</text>
+    <text x="115" y="35" text-anchor="middle" class="card-title" fill="#1e3a8a">Conformer Backbone (4x)</text>
+    
+    <rect x="15" y="48" width="200" height="35" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+    <text x="115" y="65" text-anchor="middle" class="card-body" font-weight="700" fill="#1d4ed8">4x 2D-Conv Subsampling</text>
+    <text x="115" y="78" text-anchor="middle" class="card-sub">Stride 4 (25 fps / 40ms frame)</text>
+
+    <text x="20" y="105" class="card-body">&bull; 6 Conformer Layers (D = 256)</text>
+    <text x="20" y="125" class="card-body">&bull; Depthwise Conv1D (Kernel = 15)</text>
+    <text x="20" y="145" class="card-body">&bull; Multi-Head Self-Attention (4H)</text>
+    <text x="20" y="165" class="card-body">&bull; Macaron Half-Step FFN</text>
+    <text x="20" y="185" class="card-body">&bull; Dynamic Key Padding Mask</text>
+
+    <rect x="25" y="198" width="180" height="22" rx="6" fill="#bfdbfe"/>
+    <text x="115" y="213" text-anchor="middle" class="wire-label" fill="#1e40af">Local Phonetic Formants Learner</text>
+  </g>
+
+  <!-- Wire: Transcript -> Preprocessing -->
+  <path d="M 215 475 L 295 475" stroke="#9333ea" stroke-width="2.5" marker-end="url(#arrPurple)"/>
+  <text x="255" y="465" text-anchor="middle" class="wire-label" fill="#9333ea">Raw Text</text>
+
+  <!-- Box 2B: Dialogue Preprocessing -->
+  <g transform="translate(295, 455)">
+    <rect width="230" height="70" rx="12" fill="url(#purpleGrad)" stroke="#a855f7" stroke-width="1.5" filter="url(#softShadow)"/>
+    <text x="115" y="26" text-anchor="middle" class="card-title" fill="#581c87">Dialogue Segmentation</text>
+    <text x="115" y="46" text-anchor="middle" class="card-body">1) Utterance-level Chunking</text>
+    <text x="115" y="60" text-anchor="middle" class="card-sub">2) Speaker Turn Normalization</text>
+  </g>
+
+  <!-- Wire: Dialogue Preprocessing -> LLaMA Teacher -->
+  <path d="M 410 525 L 410 560" stroke="#9333ea" stroke-width="2" marker-end="url(#arrPurple)"/>
+
+  <!-- Box 2C: LLaMA-3.2-1B Teacher Model -->
+  <g transform="translate(295, 560)">
+    <rect width="230" height="150" rx="16" fill="url(#purpleGrad)" stroke="#7e22ce" stroke-width="2.5" filter="url(#softShadow)"/>
+    <rect x="20" y="-11" width="190" height="22" rx="11" fill="url(#headerPurple)"/>
+    <text x="115" y="5" class="badge-text">TEACHER MODEL (FROZEN)</text>
+    <text x="115" y="34" text-anchor="middle" class="card-title" fill="#4a044e">LLaMA-3.2-1B Language Model</text>
+    
+    <text x="20" y="58" class="card-body">&bull; 2,048-dim Token Embedding Space</text>
+    <text x="20" y="76" class="card-body">&bull; Pretrained Causal Linguistic Prior</text>
+    <text x="20" y="94" class="card-body">&bull; LoRA Adaptation Weights</text>
+    <text x="20" y="112" class="card-body">&bull; Context Sequence Window L' = 8</text>
+
+    <rect x="20" y="122" width="190" height="20" rx="6" fill="#f3e8ff"/>
+    <text x="115" y="136" text-anchor="middle" class="card-sub" font-weight="700" fill="#6b21a8">Teacher Weights Kept Frozen</text>
+  </g>
+
+
+  <!-- ========================================================
+       COLUMN 3: SINKHORN-WASSERSTEIN OPTIMAL TRANSPORT
+       ======================================================== -->
+  <!-- Wire: Conformer -> Sinkhorn (Audio Embeddings) -->
+  <path d="M 525 290 L 605 290" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrBlue)"/>
+  <text x="565" y="278" text-anchor="middle" class="wire-label" fill="#2563eb">Audio Embeds</text>
+  <text x="565" y="304" text-anchor="middle" class="card-sub">(256 &rarr; 2048)</text>
+
+  <!-- Wire: LLaMA -> Sinkhorn (Text Embeddings) -->
+  <path d="M 525 635 L 565 635 L 565 345 L 605 345" stroke="#9333ea" stroke-width="2.5" marker-end="url(#arrPurple)"/>
+  <text x="565" y="500" text-anchor="middle" class="wire-label" fill="#9333ea" transform="rotate(-90 565 500)">Text Embeddings (2048-dim)</text>
+
+  <!-- Box 3A: Sinkhorn OT Core Block -->
+  <g transform="translate(605, 230)">
+    <rect width="230" height="175" rx="16" fill="url(#amberGrad)" stroke="#d97706" stroke-width="2.5" filter="url(#softShadow)"/>
+    <rect x="20" y="-11" width="190" height="22" rx="11" fill="url(#headerAmber)"/>
+    <text x="115" y="5" class="badge-text">CORE PROJECT NOVELTY</text>
+    <text x="115" y="34" text-anchor="middle" class="card-title" fill="#78350f">Sinkhorn Optimal Transport</text>
+    
+    <text x="15" y="58" class="card-body">&bull; Cross-Vocabulary Mapping</text>
+    <text x="25" y="74" class="card-sub">(ASR 1024 BPE &harr; LLM 128k Vocab)</text>
+    
+    <text x="15" y="94" class="card-body">&bull; Cosine Ground Cost Matrix C</text>
+    <text x="25" y="110" class="card-sub">C_ij = 1 - cos(s_i, t_j)</text>
+    
+    <text x="15" y="130" class="card-body">&bull; Top-K Candidate Distribution</text>
+    <text x="15" y="150" class="card-body">&bull; Entropic Kantorovich Regularization</text>
+    
+    <rect x="15" y="156" width="200" height="15" rx="4" fill="#fef3c7"/>
+    <text x="115" y="167" text-anchor="middle" font-size="9" font-weight="700" fill="#92400e">Many-to-Many Geometric Alignment</text>
+  </g>
+
+  <!-- Wire: Sinkhorn -> Wasserstein Loss -->
+  <path d="M 720 405 L 720 460" stroke="#d97706" stroke-width="2.5" marker-end="url(#arrAmber)"/>
+
+  <!-- Box 3B: Wasserstein Loss -->
+  <g transform="translate(615, 460)">
+    <rect width="210" height="65" rx="12" fill="url(#amberGrad)" stroke="#f59e0b" stroke-width="2" filter="url(#softShadow)"/>
+    <text x="105" y="26" text-anchor="middle" class="card-title" fill="#92400e">Wasserstein OT Loss</text>
+    <text x="105" y="46" text-anchor="middle" class="card-body" font-family="monospace">&lt;P*, C&gt; + &epsilon; H(P*)</text>
+    <text x="105" y="58" text-anchor="middle" class="card-sub">Iterative Sinkhorn Scaling</text>
+  </g>
+
+
+  <!-- ========================================================
+       COLUMN 4: DUAL TASK HEADS (ASR + EMOTION RECOGNITION)
+       ======================================================== -->
+  <!-- Wire: Conformer -> ASR Head -->
+  <path d="M 525 240 L 890 240" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrBlue)"/>
+  <text x="855" y="230" text-anchor="middle" class="wire-label" fill="#2563eb">Frame Latents</text>
+
+  <!-- Box 4A: ASR Decoding Head -->
+  <g transform="translate(890, 195)">
+    <rect width="215" height="110" rx="14" fill="url(#blueGrad)" stroke="#3b82f6" stroke-width="2" filter="url(#softShadow)"/>
+    <rect x="25" y="-10" width="165" height="20" rx="10" fill="url(#headerBlue)"/>
+    <text x="107" y="4" class="badge-text">TASK 1: SPEECH-TO-TEXT</text>
+    <text x="107" y="32" text-anchor="middle" class="card-title" fill="#1e3a8a">ASR Decoding Head</text>
+    <text x="15" y="54" class="card-body">&bull; Linear CTC Projection (Vocab 1024)</text>
+    <text x="15" y="72" class="card-body">&bull; Pass 1: CTC Prefix Beam Search</text>
+    <text x="15" y="90" class="card-body">&bull; Pass 2: Causal LM Likelihood Rescore</text>
+  </g>
+
+  <!-- Wire: Conformer -> SER Head -->
+  <path d="M 525 385 L 850 385 L 850 385 L 890 385" stroke="#059669" stroke-width="2.5" marker-end="url(#arrEmerald)"/>
+  <text x="850" y="372" text-anchor="middle" class="wire-label" fill="#059669">Utterance Features</text>
+
+  <!-- Box 4B: Speech Emotion Recognition (SER) Head (NEW / CORRECTED) -->
+  <g transform="translate(890, 340)">
+    <rect width="215" height="115" rx="14" fill="url(#emeraldGrad)" stroke="#10b981" stroke-width="2.5" filter="url(#softShadow)"/>
+    <rect x="20" y="-10" width="175" height="20" rx="10" fill="url(#headerEmerald)"/>
+    <text x="107" y="4" class="badge-text">TASK 2: EMOTION RECOGNITION</text>
+    <text x="107" y="32" text-anchor="middle" class="card-title" fill="#065f46">Emotion Classifier Head</text>
+    <text x="15" y="54" class="card-body">&bull; Temporal Mean / Attention Pooling</text>
+    <text x="15" y="72" class="card-body">&bull; Fully-Connected MLP Layer</text>
+    <text x="15" y="90" class="card-body">&bull; 4-Class Softmax (IEMOCAP)</text>
+    <text x="107" y="106" text-anchor="middle" class="card-sub" font-weight="700" fill="#047857">(Anger / Happy / Sad / Neutral)</text>
+  </g>
+
+
+  <!-- ========================================================
+       COLUMN 5: MULTI-TASK JOINT LOSS & BACKPROPAGATION
+       ======================================================== -->
+  <!-- Wire 1: CTC Loss -> Total Loss -->
+  <path d="M 997 305 L 997 530 L 870 530" stroke="#2563eb" stroke-width="2" marker-end="url(#arrBlue)"/>
+  <text x="1010" y="440" class="wire-label" fill="#2563eb">L_CTC</text>
+
+  <!-- Wire 2: Emotion Loss -> Total Loss -->
+  <path d="M 997 455 L 997 555 L 870 555" stroke="#059669" stroke-width="2" marker-end="url(#arrEmerald)"/>
+  <text x="965" y="500" class="wire-label" fill="#059669">L_Emo</text>
+
+  <!-- Wire 3: Wasserstein OT Loss -> Total Loss -->
+  <path d="M 720 525 L 720 545 L 700 545" stroke="#d97706" stroke-width="2" marker-end="url(#arrAmber)"/>
+  <text x="735" y="540" class="wire-label" fill="#d97706">&lambda;&times;L_OT</text>
+
+  <!-- Box 5A: Total Joint Multi-Task Loss -->
+  <g transform="translate(700, 520)">
+    <rect width="170" height="95" rx="14" fill="url(#roseGrad)" stroke="#f43f5e" stroke-width="2.5" filter="url(#softShadow)"/>
+    <rect x="20" y="-10" width="130" height="20" rx="10" fill="url(#headerRose)"/>
+    <text x="85" y="4" class="badge-text">OPTIMIZATION</text>
+    <text x="85" y="32" text-anchor="middle" class="card-title" fill="#9f1239">Total Joint Loss L</text>
+    <text x="85" y="52" text-anchor="middle" class="card-body" font-weight="700" fill="#be123c">L_total = L_CTC +</text>
+    <text x="85" y="68" text-anchor="middle" class="card-body" font-weight="700" fill="#be123c">0.1&times;L_OT + 0.2&times;L_Emo</text>
+    <text x="85" y="86" text-anchor="middle" class="card-sub">Multi-Task Gradient Step</text>
+  </g>
+
+  <!-- Backpropagation Loop: Student Updation Only -->
+  <path d="M 700 580 L 410 580 L 410 435" stroke="#e11d48" stroke-width="3" stroke-dasharray="6,4" marker-end="url(#arrRose)"/>
+  <rect x="440" y="568" width="240" height="24" rx="6" fill="#ffe4e6" stroke="#f43f5e" stroke-width="1"/>
+  <text x="560" y="584" text-anchor="middle" class="wire-label" fill="#be123c">Backprop: Update Student Weights Only</text>
+
+
+  <!-- ========================================================
+       COLUMN 6: SYSTEM OUTPUTS & QUANTITATIVE EVALUATION
+       ======================================================== -->
+  <!-- Wire: ASR Head -> Output -->
+  <path d="M 1105 250 L 1175 250 L 1175 285 L 1195 285" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrBlue)"/>
+  <text x="1150" y="240" text-anchor="middle" class="wire-label" fill="#2563eb">Text Tokens</text>
+
+  <!-- Wire: SER Head -> Output -->
+  <path d="M 1105 395 L 1175 395 L 1175 330 L 1195 330" stroke="#059669" stroke-width="2.5" marker-end="url(#arrEmerald)"/>
+  <text x="1150" y="385" text-anchor="middle" class="wire-label" fill="#059669">Emotion Logits</text>
+
+  <!-- Box 6A: Dual Outputs -->
+  <g transform="translate(1195, 255)">
+    <rect width="145" height="125" rx="14" fill="url(#indigoGrad)" stroke="#6366f1" stroke-width="2.5" filter="url(#softShadow)"/>
+    <rect x="20" y="-10" width="105" height="20" rx="10" fill="url(#headerIndigo)"/>
+    <text x="72" y="4" class="badge-text">PREDICTIONS</text>
+    <text x="72" y="32" text-anchor="middle" class="card-title" fill="#312e81">System Output</text>
+    
+    <line x1="12" y1="42" x2="132" y2="42" stroke="#cbd5e1" stroke-width="1"/>
+    
+    <text x="15" y="62" class="card-body" font-weight="700" fill="#1e3a8a">1) Recognized</text>
+    <text x="30" y="78" class="card-body" fill="#1d4ed8">Speech Text</text>
+    
+    <text x="15" y="100" class="card-body" font-weight="700" fill="#065f46">2) Emotion Label</text>
+    <text x="30" y="115" class="card-sub" fill="#047857">(Ang/Hap/Sad/Neu)</text>
+  </g>
+
+  <!-- Wire: Output -> Metrics -->
+  <path d="M 1340 315 L 1375 315" stroke="#64748b" stroke-width="2" marker-end="url(#arrSlate)"/>
+
+  <!-- Box 6B: Evaluation Metrics -->
+  <g transform="translate(1375, 220)">
+    <rect width="120" height="195" rx="14" fill="url(#slateGrad)" stroke="#64748b" stroke-width="2" filter="url(#softShadow)"/>
+    <text x="60" y="28" text-anchor="middle" class="card-title" fill="#0f172a">Evaluation</text>
+    <text x="60" y="46" text-anchor="middle" class="card-title" fill="#0f172a">Metrics</text>
+    
+    <line x1="10" y1="56" x2="110" y2="56" stroke="#e2e8f0" stroke-width="1"/>
+    
+    <text x="10" y="76" class="card-body" font-weight="700" fill="#2563eb">ASR Metrics:</text>
+    <text x="10" y="94" class="card-sub">&bull; CER (%)</text>
+    <text x="10" y="110" class="card-sub">&bull; WER (%)</text>
+    <text x="10" y="126" class="card-sub">&bull; CTC Loss</text>
+    
+    <text x="10" y="148" class="card-body" font-weight="700" fill="#059669">SER Metrics:</text>
+    <text x="10" y="166" class="card-sub">&bull; Weighted Acc</text>
+    <text x="10" y="180" class="card-sub">&bull; Unweighted Acc</text>
+  </g>
+
+  <!-- ========================================================
+       FOOTER: SUMMARY LEGEND & COLOR CODE BAR
+       ======================================================== -->
+  <g transform="translate(35, 755)">
+    <rect width="1450" height="48" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+    
+    <!-- Legend dots -->
+    <circle cx="35" cy="24" r="7" fill="#2563eb"/>
+    <text x="50" y="28" class="card-body" font-weight="600">Acoustic Conformer (Student)</text>
+    
+    <circle cx="300" cy="24" r="7" fill="#9333ea"/>
+    <text x="315" y="28" class="card-body" font-weight="600">LLaMA-3.2-1B (Frozen Teacher)</text>
+    
+    <circle cx="585" cy="24" r="7" fill="#d97706"/>
+    <text x="600" y="28" class="card-body" font-weight="600">Sinkhorn Optimal Transport Distillation</text>
+    
+    <circle cx="925" cy="24" r="7" fill="#059669"/>
+    <text x="940" y="28" class="card-body" font-weight="600">Speech Emotion Recognition (SER)</text>
+    
+    <circle cx="1235" cy="24" r="7" fill="#e11d48"/>
+    <text x="1250" y="28" class="card-body" font-weight="600">Multi-Task Gradient Backprop</text>
+  </g>
+</svg>
