@@ -1,0 +1,146 @@
+\chapter{LITERATURE SURVEY}
+\label{ch:literature}
+
+\section{Evolution of Acoustic Modeling Paradigms}
+The field of Automatic Speech Recognition (ASR) has undergone continuous architectural transformation over the past three decades. Early speech processing systems relied primarily on hybrid architectures combining Hidden Markov Models with Gaussian Mixture Models (HMM-GMM) to model temporal sequence transitions and spectral emission probabilities. With the advent of deep learning, Deep Neural Networks (HMM-DNN) replaced GMMs, yielding noticeable gains in phoneme recognition. Nevertheless, these hybrid frameworks remained heavily burdened by the necessity for complex, multi-stage pipelines requiring explicit frame-level phonetic alignments, forced alignment algorithms, and decoupled pronunciation lexicons.
+
+To alleviate the compounding errors of multi-stage pipelines, the community transitioned toward end-to-end (E2E) sequence-to-sequence formulations. Notable milestones include:
+\begin{enumerate}
+    \item \textbf{Attention-Based Encoder-Decoder (AED) Models:} Exemplified by architectures such as Listen, Attend and Spell (LAS) \cite{chan2016listen}, AED models decouple acoustic encoding from autoregressive linguistic generation via cross-attention mechanisms. While effective at capturing long-term dependencies, AED architectures suffer from label exposure bias, hallucination phenomena during extended acoustic pauses, and quadratic computational complexity $\mathcal{O}(T^2)$ during decoding, making real-time streaming infeasible.
+    \item \textbf{Recurrent Neural Network Transducers (RNN-T):} Formulated by Graves \cite{graves2012sequence}, RNN-T models decouple acoustic feature encoding and linguistic sequence prediction into separate sub-networks merged via a joint network. Although RNN-T operates in a streaming fashion, calculating the forward-backward variable lattice over the 3D tensor $\mathcal{O}(B \times T \times U \times |\mathcal{V}|)$ requires massive GPU memory during training, while its autoregressive prediction network creates sequential decoding bottlenecks.
+    \item \textbf{Self-Attention Transformers and the Conformer Paradigm:} Vaswani et al. \cite{vaswani2017attention} introduced the Transformer architecture, replacing recurrent units with Multi-Head Self-Attention (MHSA). While Transformers excel at global context aggregation, speech signals exhibit localized inductive structures: formant resonance transitions and vocal tract dynamics occur over short time spans (10 to 50 ms). To bridge global contextual modeling with localized spatial filtering, Gulati et al. \cite{gulati2020conformer} introduced the Conformer architecture. By interleaving depthwise separable convolutions with self-attention inside a Macaron-style feed-forward backbone, the Conformer establishes superior parameter efficiency and acoustic representation fidelity.
+\end{enumerate}
+
+\section{Connectionist Temporal Classification and Blank Collapse}
+Connectionist Temporal Classification (CTC), introduced by Graves et al. \cite{graves2006connectionist}, eliminated the requirement for pre-segmented training alignments by introducing an auxiliary null transition symbol, termed the blank token ($\pi_\emptyset$). CTC evaluates the conditional probability of a target subword sequence $Y = (y_1, \dots, y_U)$ given an acoustic sequence $X = (x_1, \dots, x_T)$ by marginalizing across all valid valid alignment paths $\pi \in \mathcal{B}^{-1}(Y)$:
+\begin{equation}
+    P(Y \mid X) = \sum_{\pi \in \mathcal{B}^{-1}(Y)} \prod_{t=1}^T P(\pi_t \mid x_t)
+\end{equation}
+where $\mathcal{B}$ denotes the sequence collapse operator that removes consecutive repeated labels and deletes blank emissions.
+
+Despite the advantage of non-autoregressive parallel decoding during inference, pure CTC models operate under a conditional independence assumption: labels emitted at time frame $t$ are statistically independent of labels emitted at time $t-1$, conditioned on the entire acoustic input $X$. In practical acoustic modeling, the acoustic frame sampling rate drastically exceeds the phoneme emission rate, typically yielding a 14:1 oversampling ratio. Consequently, unregularized CTC networks converge to a trivial degenerate state known as \textit{Blank Collapse}, wherein the model outputs blank tokens for more than 90\% of the time steps, collapsing valid character emissions into sharp, highly fragile spike intervals.
+
+\section{Knowledge Distillation Paradigms in Speech Processing}
+Knowledge Distillation (KD), pioneered by Hinton et al., provides an elegant framework for transferring dark knowledge—soft contextual class probabilities—from a high-capacity teacher network to a resource-constrained student. In speech processing, distillation protocols have expanded across three primary paradigms:
+\begin{enumerate}
+    \item \textbf{Logit-Based Distillation:} The student matches the temperature-scaled posterior class probabilities of the teacher by minimizing Kullback-Leibler (KL) divergence. However, this approach presupposes an isomorphic vocabulary space ($\mathcal{V}_{\text{teacher}} = \mathcal{V}_{\text{student}}$), failing when vocabulary tokenizers differ.
+    \item \textbf{Intermediate Feature Distillation:} The student minimizes the mean-squared error or cosine distance between intermediate hidden representation layers. This requires matching or projecting latent feature dimensions, often inducing architectural rigidity.
+    \item \textbf{Cross-Modal and Optimal Transport Distillation:} Emerging techniques map representations across disparate structural spaces by formulating probability mass transportation over continuous semantic spaces, circumventing discrete token mismatch.
+\end{enumerate}
+
+\section{Detailed Survey of Contemporary Base Works}
+
+\subsection{Base Paper 1: Distilling Knowledge of LLMs for ASR}
+\textbf{Citation:} Hayato Futami and Tatsuya Kawahara (2026), `Distilling the Knowledge of LLMs for Automatic Speech Recognition', \textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, Vol. 34, pp. 2962--2971.
+
+\subsubsection{Methodology Overview}
+Futami and Kawahara investigated the transfer of linguistic knowledge from autoregressive Large Language Models into compact ASR decoders. To bridge the directional discrepancy between causal LLM decoders and non-causal speech decoders, the authors proposed a Pseudo-Bidirectional Knowledge Distillation (PBKD) framework. Contextual representations were extracted by conditioning the LLM on future lookahead text windows. To address the vocabulary mismatch between the LLM tokenizer ($|\mathcal{V}_{\text{LM}}| \approx 32\text{k}$) and the ASR tokenizer ($|\mathcal{V}_{\text{ASR}}| \approx 1\text{k}$), the authors employed a normalized Levenshtein edit-distance string alignment heuristic.
+
+\subsubsection{Key Advantages (Pros)}
+\begin{itemize}
+    \item Successfully demonstrated that causal generative LLMs can serve as effective linguistic teachers for non-causal speech decoders via pseudo-bidirectional windowing.
+    \item Formulated an initial heuristic solution to the vocabulary discrepancy problem without requiring full LLM fine-tuning.
+\end{itemize}
+
+\subsubsection{Critical Drawbacks and Limitations (Cons)}
+\begin{itemize}
+    \item \textbf{Rigid Discard Thresholds:} The edit-distance heuristic relies on a hard threshold ($d \le 0.2$). Subwords that fail exact one-to-one mapping (such as multi-token subword splits like ``observing'' $\to$ ``obs'' + ``erving'') are completely discarded from distillation supervision, losing vital lexical information.
+    \item \textbf{Computational Inefficiency:} Re-scoring candidate tokens dynamically using edit distance introduces high algorithmic overhead during training batch compilation.
+    \item \textbf{Narrow Candidate Truncation:} The alignment is restricted to the top-512 most likely candidate words at each step, preventing the student from acquiring full semantic distribution tails.
+\end{itemize}
+
+\subsection{Base Paper 2: Multimodal Emotion Recognition with LoRA}
+\textbf{Citation:} Feng Liu, Ziwang Fu, and Yunlong Wang (2025), `Reward-Based Gradient Modulation for Multimodal Emotion Recognition with LoRA', \textit{IEEE Transactions on Computational Social Systems}, Vol. 12, No. 5, pp. 3301--3310.
+
+\subsubsection{Methodology Overview}
+Liu et al. explored Parameter-Efficient Fine-Tuning (PEFT) for multimodal emotion recognition across speech, text, and visual modalities. To adapt pre-trained transformer backbones without destroying foundational representations, Low-Rank Adaptation (LoRA) adapters were injected into multi-head attention projection layers. The authors introduced a reward-based gradient modulation strategy to dynamically reweight gradient updates across dominant and sluggish modalities during backpropagation.
+
+\subsubsection{Key Advantages (Pros)}
+\begin{itemize}
+    \item Achieved high parameter efficiency by freezing base foundation weights ($W_0$) and optimizing only low-rank matrices ($A$ and $B$).
+    \item Alleviated modality suppression by actively balancing gradient competition between textual and acoustic channels.
+    \item Prevented catastrophic forgetting of pre-trained linguistic hierarchies.
+\end{itemize}
+
+\subsubsection{Critical Drawbacks and Limitations (Cons)}
+\begin{itemize}
+    \item \textbf{Uniform Feature Treatment:} The model treats audio and video streams identically within feature extraction pipelines, neglecting the localized temporal dynamics unique to acoustic speech formants.
+    \item \textbf{Absence of Noise Handling:} Lacks explicit acoustic noise calibration or frame subsampling, rendering the model vulnerable to pitch jitter and environmental noise.
+    \item \textbf{Single-Task Restriction:} Focuses exclusively on emotion classification and cannot perform speech transcription.
+\end{itemize}
+
+\subsection{Base Paper 3: Steering Language Models to Stable Speech Emotion Recognition}
+\textbf{Citation:} Zhixian Zhao, Xinfa Zhu, Xinsheng Wang, Shuiyuan Wang, Xuelong Geng, Wenjie Tian, and Lei Xie (2026), `Steering Language Model to Stable Speech Emotion Recognition via Contextual Perception and Chain of Thought', \textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, Vol. 34, pp. 3110--3123.
+
+\subsubsection{Methodology Overview}
+Zhao et al. formulated a framework using generative LLMs for conversational emotion recognition by guiding the model through a Chain-of-Thought (CoT) reasoning mechanism. The architecture integrates dual contextual perception, combining audio tone features with dialogue discourse transcripts to infer emotional shifts.
+
+\subsubsection{Key Advantages (Pros)}
+\begin{itemize}
+    \item Effectively suppresses hallucination in LLM-based affective reasoning by grounding predictions on acoustic prosody.
+    \item Captures dual contextual perception by jointly reasoning over speaker tone and semantic content.
+\end{itemize}
+
+\subsubsection{Critical Drawbacks and Limitations (Cons)}
+\begin{itemize}
+    \item \textbf{Heavy Resource Footprint:} Requires multi-billion parameter LLMs during active inference, requiring high GPU memory and generating high latency unsuitable for edge deployment.
+    \item \textbf{Minority Class Breakdown:} Suffers severe accuracy degradation on minority emotion categories (fear and disgust dropped below 20\% accuracy).
+\end{itemize}
+
+\subsection{Base Paper 4: Evaluating Speech Emotion Recognition on IEMOCAP}
+\textbf{Citation:} Nikolaos Antoniou, Athanasios Katsamanis, Theodoros Giannakopoulos, and Shrikanth Narayanan (2023), `Designing and Evaluating Speech Emotion Recognition Systems: A Reality Check Case Study with IEMOCAP', \textit{Language Resources and Evaluation}, Vol. 57, pp. 1105--1132.
+
+\subsubsection{Methodology Overview}
+Antoniou et al. conducted an empirical audit of Speech Emotion Recognition systems evaluated on the benchmark IEMOCAP dataset. The authors investigated widespread experimental flaws in the literature, including speaker contamination across training and test splits, arbitrary class merging, and the exclusion of challenging emotional categories.
+
+\subsubsection{Key Findings and Recommendations}
+\begin{itemize}
+    \item Standardized the requirement for strict 5-fold Leave-One-Session-Out (LOSO) cross-validation to evaluate speaker-independent generalization.
+    \item Demonstrated that evaluating models without speaker separation yields severely overfitted, non-generalizable performance metrics.
+    \item Highlighted the necessity of reporting both Weighted Accuracy (WA) and Unweighted Accuracy (UA) to account for natural emotional class imbalances.
+\end{itemize}
+
+\subsection{Base Paper 5: Continual Learning in ASR via Singular Value Tuning}
+\textbf{Citation:} Steven Vander Eeckt and Hugo Van hamme (2026), `Efficient Rehearsal for Continual Learning in ASR via Singular Value Tuning', \textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, Vol. 34, pp. 1420--1432.
+
+\subsubsection{Methodology Overview}
+Eeckt and Van hamme investigated parameter-efficient continual learning in ASR architectures. To adapt acoustic decoders to new acoustic domains without catastrophic forgetting, the authors proposed Singular Value Tuning (SVT), wherein singular values of weight matrices are adapted while singular vectors remain frozen.
+
+\subsubsection{Key Advantages (Pros)}
+\begin{itemize}
+    \item Exceptional parameter compactness and memory economy during incremental adaptation.
+    \item Mitigates overfitting on small acoustic subsets.
+\end{itemize}
+
+\subsubsection{Critical Drawbacks and Limitations (Cons)}
+\begin{itemize}
+    \item Tuning only singular values restricts representation capacity when bridging massive cross-modal vocabulary disparities.
+    \item High hyperparameter sensitivity when scaling to multilingual or multi-task acoustic pipelines.
+\end{itemize}
+
+\section{Summary of Research Gaps and Proposed Interventions}
+Table \ref{tab:lit_comparison} synthesizes the key attributes, methodologies, and limitations of existing speech distillation frameworks in comparison to our proposed Wasserstein-guided multi-task system.
+
+\begin{table}[htbp]
+\centering
+\caption{Comprehensive Comparison of Literature Survey Base Works and Proposed System}
+\label{tab:lit_comparison}
+\small
+\begin{tabular}{p{3.2cm}p{3.0cm}p{4.2cm}p{3.6cm}}
+\toprule
+\textbf{Research Work} & \textbf{Core Methodology} & \textbf{Identified Limitations} & \textbf{Proposed Framework Solution} \\
+\midrule
+Futami \& Kawahara (2026) \cite{futami2026distilling} & Edit-distance string alignment from LLM & Rigid discard threshold ($d \le 0.2$), discards multi-token splits & Continuous entropic Optimal Transport (Zero token discard) \\
+\addlinespace
+Liu et al. (2025) \cite{liu2025reward} & PEFT LoRA for multimodal emotion & Single-task (SER only), no acoustic temporal subsampling & Joint multi-task (ASR + SER), 4x 2D-Conv subsampling \\
+\addlinespace
+Zhao et al. (2026) \cite{zhao2026steering} & Contextual Chain-of-Thought in LLM & Prohibitive inference latency, requires LLM at test time & Frozen teacher; compact 12.55M student with zero runtime LLM \\
+\addlinespace
+Antoniou et al. (2023) \cite{antoniou2023designing} & IEMOCAP evaluation audit & Discards ambiguous non-consensus ($xxx$) utterances & Automated AI adjudicator yielding 72.72\% consensus \\
+\addlinespace
+Eeckt \& Hamme (2026) \cite{eeckt2026efficient} & Singular Value Tuning for ASR & Cannot resolve extreme vocabulary mismatch ($V_T \ne V_S$) & Continuous semantic manifold mapping over 2048-dim vectors \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The fundamental research gap established by this survey is the absence of an integrated, mathematically sound distillation framework that can bridge severe vocabulary disparities without heuristic token pruning, simultaneously neutralize CTC blank collapse, and execute real-time dual-task speech transcription and emotion recognition on edge hardware. The subsequent chapters formalize our proposed resolution.

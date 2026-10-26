@@ -1,0 +1,55 @@
+\chapter{WORKING ENVIRONMENT AND SYSTEM CONFIGURATION}
+\label{app:environment}
+
+In accordance with institutional guidelines, all specific programming languages, machine learning frameworks, software libraries, and hardware accelerator specifications utilized during the development, training, and testing of the system are detailed in this Appendix.
+
+\section{Hardware Specifications}
+The computational infrastructure utilized for model training, distillation optimization, and edge inference benchmarking is summarized in Table \ref{tab:hardware_specs}.
+
+\begin{table}[htbp]
+\centering
+\caption{Hardware System Specifications}
+\label{tab:hardware_specs}
+\begin{tabular}{ll}
+\toprule
+\textbf{Hardware Component} & \textbf{Specification / Model} \\
+\midrule
+Host Central Processor (CPU) & Intel Core i7-11800H / AMD EPYC 7313 (8 to 16 Cores) \\
+Base Clock Speed & 2.30 GHz (Turbo Boost up to 4.60 GHz) \\
+System Host Memory (RAM) & 16 GB DDR4 (3200 MHz) \\
+Primary Graphic Accelerator (GPU) & NVIDIA GeForce RTX 3050 Laptop GPU (4 GB GDDR6) \\
+High-Performance Accelerator & NVIDIA RTX A6000 (48 GB GDDR6) \\
+Compute Unified Device Architecture & CUDA Compute Capability 8.6 / 8.0 \\
+Storage Infrastructure & 512 GB PCIe Gen 4 NVMe Solid State Drive (M.2) \\
+Audio Ingestion Hardware & 16 kHz High-Definition Audio Capture Interface \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Software Environment and Library Dependencies}
+The software stack, development environments, and third-party scientific packages utilized across the project lifecycle are documented in Table \ref{tab:software_specs}.
+
+\begin{table}[htbp]
+\centering
+\caption{Software Environment and Framework Specifications}
+\label{tab:software_specs}
+\begin{tabular}{lll}
+\toprule
+\textbf{Software Layer} & \textbf{Package / Tool} & \textbf{Version} \\
+\midrule
+Operating System & Microsoft Windows 11 / Ubuntu Linux & 64-bit Edition \\
+Programming Language & Python Programming Language & Version 3.10.12 \\
+Deep Learning Framework & PyTorch Core Deep Learning Library & Version 2.5.1 + CUDA 12.1 \\
+Audio Processing Library & Torchaudio Library & Version 2.5.1 \\
+NLP \& Foundation Models & HuggingFace Transformers Framework & Version 4.46.3 \\
+Subword Tokenizer Engine & Google SentencePiece BPE Library & Version 0.2.2 \\
+Audio I/O \& Manipulation & SoundFile and Librosa Audio Toolkits & Version 0.14.0 / 0.10.1 \\
+Evaluation Metric Toolkit & JiWER Edit-Distance Speech Evaluator & Version 4.0.0 \\
+Numerical Computation & NumPy High-Performance Array Library & Version 2.2.6 \\
+Scientific Visualization & Matplotlib and Seaborn Libraries & Version 3.10.9 / 0.13.2 \\
+Interactive Web Interface & Gradio Edge Dashboard & Version 4.44.0 \\
+Optimal Transport Solver & PyTorch Vectorized Sinkhorn-Knopp & Native Custom GPU Kernel \\
+Document Typesetting & TeX Live / Overleaf LaTeX Engine & Version 2026 \\
+\bottomrule
+\end{tabular}
+\end{table}

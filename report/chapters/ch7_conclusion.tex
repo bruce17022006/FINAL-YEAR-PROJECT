@@ -1,0 +1,29 @@
+\chapter{CONCLUSION AND FUTURE ENHANCEMENTS}
+\label{ch:conclusion}
+
+\section{Summary of Contributions}
+In this project, we addressed the foundational challenges of non-autoregressive acoustic modeling and cross-vocabulary knowledge distillation from generative foundation models into compact speech networks. By introducing a continuous geometric distillation framework based on entropic Sinkhorn-Wasserstein Optimal Transport, this research eliminated the structural constraints that previously prevented compact acoustic encoders from absorbing the syntactic and semantic richness of large language models.
+
+The primary contributions achieved in this work are summarized as follows:
+\begin{enumerate}
+    \item \textbf{Neutralization of CTC Blank Collapse:} By implementing a two-stage 2D-convolutional subsampling front-end ($4\times$ temporal decimation to 25 fps / 40 ms stride) combined with depthwise separable convolutions ($K = 15$) and dynamic attention key-padding masks, the framework successfully eliminated acoustic-phoneme oversampling. This architectural intervention, coupled with Sinkhorn semantic grounding, systematically reduced blank token dominance from 92.4\% down to 68.2\%, quadrupling valid phonetic throughput to 0.34 tokens/second.
+    \item \textbf{Continuous Cross-Vocabulary Distillation (Zero Token Discard):} We established a mathematically rigorous Optimal Transport formulation over cosine-normalized embedding manifolds that bridges an extreme $125\times$ vocabulary cardinality mismatch ($|\mathcal{V}_{\text{teacher}}| = 128{,}256$ vs $|\mathcal{V}_{\text{student}}| = 1{,}024$). Unlike conventional heuristic string alignment which discards multi-token subword splits, our framework guarantees 100\% token retention, yielding a 45.2\% relative error reduction on LibriSpeech (contracting WER from 68.4\% to 37.5\%).
+    \item \textbf{Unified Multi-Task Edge Economy:} The developed 12.55M-parameter Conformer student simultaneously executes speech transcription and 4-class Speech Emotion Recognition (Neutral, Anger, Sadness, Happiness), achieving 59.97\% Unweighted Accuracy on held-out IEMOCAP Session 5—matching competitive 95M-parameter self-supervised front-ends with 87\% fewer parameters. Operating at an edge Real-Time Factor of $\text{RTF}_{\text{CPU}} = 0.08$ with a 50.2 MB memory footprint, the system provides zero-overhead edge viability.
+    \item \textbf{Adjudication of Human Perceptual Ambiguity:} Deployed as an objective mathematical tie-breaker over 2,507 contentious non-consensus utterances (\texttt{xxx}) within IEMOCAP, the model attained an unprecedented 72.72\% Human-AI agreement rate, demonstrating balanced emotional discrimination without modal collapse.
+\end{enumerate}
+
+\section{Practical Deployment Implications}
+The developed multi-task framework delivers immediate practical benefits across several real-world engineering domains:
+\begin{itemize}
+    \item \textbf{Privacy-Preserving On-Device Assistants:} Because the 12.55M model requires no runtime server connection or cloud LLM invocation, private voice commands and conversations remain strictly local to user devices.
+    \item \textbf{Empathetic Customer Support & Healthcare:} Combining live transcription with immediate affective state detection enables automated call centers and telemedicine platforms to flag distressed or agitated callers for urgent human intervention.
+    \item \textbf{Energy-Efficient Edge Computing:} Operating at an RTF of 0.08 on standard commodity multi-core processors reduces device battery drain and thermal dissipation in mobile and robotic systems.
+\end{itemize}
+
+\section{Future Research Trajectories}
+To expand upon the foundations established in this project, several promising research directions are identified:
+\begin{enumerate}
+    \item \textbf{Acoustic Corpus and Multilingual Scaling:} Scaling the multi-task learning architecture to massive multi-thousand-hour acoustic datasets (such as LibriSpeech 960-hours, CommonVoice, and VoxCeleb) to enhance acoustic generalization across international accents and adverse acoustic environments.
+    \item \textbf{Cross-Lingual Optimal Transport Alignment:} Extending the metric ground cost matrix formulation to multilingual foundation LLMs (such as multilingual LLaMA-3 and Qwen) to distill cross-lingual semantic representations into resource-scarce regional dialects.
+    \item \textbf{Hardware-Aware Post-Training Quantization:} Implementing INT8 and FP8 integer quantization alongside Open Neural Network Exchange (ONNX) runtimes to achieve sub-millisecond inference latencies on ultra-low-power microcontrollers and neuromorphic edge hardware.
+\end{enumerate}

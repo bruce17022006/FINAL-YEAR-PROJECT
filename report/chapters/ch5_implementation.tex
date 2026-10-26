@@ -1,0 +1,116 @@
+\chapter{SYSTEM IMPLEMENTATION}
+\label{ch:system_implementation}
+
+\section{Algorithmic Framework and Execution Workflow}
+The implementation of the proposed multi-task distillation framework is organized into a three-stage progressive curriculum. Rather than training the joint network from uninitialized random weights simultaneously across both modalities, the curriculum partitions learning into distinct optimization phases:
+\begin{enumerate}
+    \item \textbf{Stage 1 (Acoustic Representation Bootstrapping):} The Conformer backbone is initialized and trained under Connectionist Temporal Classification on clean read speech to establish baseline phonetic feature detectors.
+    \item \textbf{Stage 2 (Cross-Vocabulary Knowledge Distillation):} The acoustic student is coupled to the frozen generative foundation teacher via entropic Optimal Transport to infuse high-level linguistic semantics and eliminate blank attractor dominance.
+    \item \textbf{Stage 3 (Multi-Task Joint Fine-Tuning):} Dual prediction heads are co-optimized end-to-end on emotional conversational speech, harmonizing acoustic transcription and paralinguistic classification.
+\end{enumerate}
+
+\section{Stage 1: Student Acoustic Backbone Bootstrapping}
+In the bootstrapping stage, the 6-layer Conformer student network is optimized on single-channel 16 kHz audio from the clean subsets of the LibriSpeech corpus. The objective is to enable the randomly initialized convolution kernels ($K = 15$) and self-attention projections to detect basic acoustic formant transitions and spectral contours.
+
+The training parameters during this initial phase follow an AdamW optimization protocol with a decoupled weight decay of $10^{-2}$. Learning rates are scheduled via a linear warmup for the first 1,000 steps up to a peak of $\eta_{\text{max}} = 1 \times 10^{-4}$, followed by cosine annealing decay down to $1 \times 10^{-6}$. Gradient norm clipping is enforced at a threshold of $\|\mathbf{g}\|_2 \le 1.0$ to prevent gradient explosion.
+
+During Stage 1, the model is trained exclusively with unassisted CTC loss. As observed empirically, the network rapidly succumbs to the \textit{Blank Collapse} pathology: the average blank prior $\pi_\emptyset$ rises to 92.4\%, and Character Error Rate plateaus at 38.2\% (68.4\% WER). This empirical baseline confirms that purely acoustic supervision is insufficient to acquire robust linguistic syntax.
+
+\section{Stage 2: Cross-Vocabulary Entropic Distillation Protocol}
+In Stage 2, the frozen generative foundation teacher $\texttt{Llama-3.2-1B}$ is integrated into the training loop. Ground-truth transcription tokens $W = (w_1, \dots, w_M)$ are mapped through the teacher's static embedding table to construct reference target distribution $T \in \mathbb{R}^{M \times 2048}$. Concurrently, the Conformer encoder projects frame latents through the linear mapping layer $W_{\text{proj}}$ to produce student distribution $S' \in \mathbb{R}^{T' \times 2048}$.
+
+Algorithm \ref{alg:sinkhorn_distill} details the operational stages of the batched cross-vocabulary distillation protocol.
+
+\begin{table}[htbp]
+\centering
+\caption{Algorithmic Specification of Cross-Vocabulary Entropic Distillation}
+\label{alg:sinkhorn_distill}
+\begin{tabular}{p{14.5cm}}
+\toprule
+\textbf{Algorithm 1: Batched Entropic Sinkhorn-Wasserstein Distillation} \\
+\midrule
+\textbf{Input:} Acoustic frames $X \in \mathbb{R}^{T \times 80}$, Reference text tokens $W = (w_1, \dots, w_M)$, Student model $\mathcal{M}_S$, Frozen Teacher $\mathcal{M}_T$, Regularizer $\gamma = 0.10$, Weight $\lambda_{\text{OT}} = 0.10$, Iterations $L = 10$. \\
+\textbf{Output:} Optimized student parameter weights $\theta_S$. \\
+\midrule
+1: Ingest speech spectrogram $X$ through 4$\times$ 2D-Conv subsampling front-end: $X_{\text{sub}} \leftarrow \text{ConvSub}(X)$ \\
+2: Compute frame acoustic latents across 6 Conformer blocks: $Z \leftarrow \mathcal{M}_S(X_{\text{sub}})$ \\
+3: Map student latents into teacher embedding manifold: $S' \leftarrow Z W_{\text{proj}} \in \mathbb{R}^{T' \times 2048}$ \\
+4: Query frozen teacher embedding table for target tokens: $T \leftarrow \mathcal{M}_T(W) \in \mathbb{R}^{M \times 2048}$ \\
+5: \textbf{for} each batch frame $i \in \{1, \dots, T'\}$ \textbf{do} \\
+6: \quad \textbf{for} each target token $j \in \{1, \dots, M\}$ \textbf{do} \\
+7: \qquad Evaluate cosine ground cost: $C_{ij} \leftarrow 1 - \frac{\mathbf{s}'_i \cdot \mathbf{t}_j}{\|\mathbf{s}'_i\|_2 \|\mathbf{t}_j\|_2}$ \\
+8: \quad \textbf{end for} \\
+9: \textbf{end for} \\
+10: Formulate Gibbs kernel matrix: $K \leftarrow \exp(-C / \gamma)$ \\
+11: Initialize scaling vector: $\mathbf{b}^{(0)} \leftarrow \mathbf{1}_M / M$ \\
+12: \textbf{for} iteration $k = 0$ to $L - 1$ \textbf{do} \\
+13: \quad Update row scaling vector: $\mathbf{a}^{(k+1)} \leftarrow \mathbf{r} \oslash (K \mathbf{b}^{(k)})$ \\
+14: \quad Update column scaling vector: $\mathbf{b}^{(k+1)} \leftarrow \mathbf{c} \oslash (K^\top \mathbf{a}^{(k+1)})$ \\
+15: \textbf{end for} \\
+16: Compute regularized optimal transport plan: $P^* \leftarrow \text{diag}(\mathbf{a}^{(L)}) \, K \, \text{diag}(\mathbf{b}^{(L)})$ \\
+17: Evaluate distillation loss: $\mathcal{L}_{\text{OT}} \leftarrow \sum_{i=1}^{T'} \sum_{j=1}^M P^*_{ij} C_{ij}$ \\
+18: Compute CTC acoustic loss: $\mathcal{L}_{\text{CTC}} \leftarrow -\ln P_{\text{CTC}}(W \mid X)$ \\
+19: Formulate composite loss: $\mathcal{L}_{\text{stage2}} \leftarrow \mathcal{L}_{\text{CTC}} + \lambda_{\text{OT}} \mathcal{L}_{\text{OT}}$ \\
+20: Execute backpropagation: $\theta_S \leftarrow \theta_S - \eta \nabla_{\theta_S} \mathcal{L}_{\text{stage2}}$ \quad (Teacher $\nabla_{\theta_T} \equiv 0$) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Stage 3: Multi-Task Joint Loss Optimization Formulation}
+In Stage 3, the pre-trained student is deployed onto the IEMOCAP corpus to train the dual prediction heads concurrently. The overall network is governed by a composite multi-task objective balancing acoustic sequence alignment, Optimal Transport semantic distillation, and categorical emotion discrimination:
+\begin{equation}
+    \mathcal{L}_{\text{total}} = \mathcal{L}_{\text{CTC}} + \lambda_{\text{OT}} \mathcal{L}_{\text{OT}} + \lambda_{\text{emo}} \mathcal{L}_{\text{emo}}
+\end{equation}
+where $\lambda_{\text{OT}} = 0.10$ and $\lambda_{\text{emo}} = 0.20$ represent empirically calibrated balancing coefficients.
+
+\subsection{Acoustic CTC Loss Formulation}
+The ASR loss enforces sequence-level alignment between downsampled acoustic frames and target subword sequences $Y$ over the SentencePiece vocabulary without requiring frame-level phonetic boundaries:
+\begin{equation}
+    \mathcal{L}_{\text{CTC}} = - \ln \sum_{\pi \in \mathcal{B}^{-1}(Y)} \prod_{t=1}^{T'} P(\pi_t \mid x_t)
+\end{equation}
+where $\mathcal{B}$ sequentially removes consecutive repeated tokens and blank emissions.
+
+\subsection{Affective State Cross-Entropy Formulation}
+The Speech Emotion Recognition head is optimized against human-annotated categorical emotion ground-truth vectors $\mathbf{y}_{\text{emo}}$ across four classes:
+\begin{equation}
+    \mathcal{L}_{\text{emo}} = - \sum_{c=1}^4 y_{\text{emo}, c} \ln \hat{y}_{\text{emo}, c}
+\end{equation}
+where $\hat{\mathbf{y}}_{\text{emo}} \in \mathbb{R}^4$ denotes the predicted posterior probability distribution emitted by the temporal mean pooling MLP.
+
+\subsection{Gradient Flow Isolation and Parameter Economy}
+During backward propagation, parameter gradients are routed strictly to update the student weights $\theta_S$:
+\begin{equation}
+    \theta_S \leftarrow \theta_S - \eta \nabla_{\theta_S} \mathcal{L}_{\text{total}}
+\end{equation}
+Because the generative teacher model $\theta_T$ receives zero gradient updates ($\nabla_{\theta_T} \mathcal{L}_{\text{total}} \equiv 0$), the student is forced to distill the teacher's latent world knowledge directly into its own compact feed-forward and convolution kernels.
+
+\section{Dynamic Attention Key-Padding Masking Mechanism}
+Speech audio recordings in batched mini-batches exhibit variable temporal durations. To enable parallelized batch matrix multiplications, shorter utterances are padded with trailing zero-energy frames. However, standard self-attention calculates all-to-all frame affinities across the temporal axis, allowing non-informative zero-energy pad frames to distort attention probability mass.
+
+To neutralize pad contamination, a dynamic key-padding mask $M \in \{0, 1\}^{B \times T'}$ is constructed directly from original unpadded utterance lengths $L_{\text{input}, b}$:
+\begin{equation}
+    M_{b, t} = \begin{cases}
+        \text{True (Masked)}, & \text{if } t \ge \left\lfloor \frac{L_{\text{input}, b} + 3}{4} \right\rfloor \\
+        \text{False (Valid)}, & \text{otherwise}
+    \end{cases}
+\end{equation}
+Inside the self-attention operator, masked positions are injected with an extreme negative constant before the Softmax operation:
+\begin{equation}
+    (Q K^\top)_{b, i, j} = -\infty \quad \text{where } M_{b, j} = \text{True}
+\end{equation}
+Consequently, $\text{Softmax}(-\infty) = 0$, guaranteeing that zero-padded tail frames exert zero mathematical influence on valid speech representations.
+
+\section{Inference and Decoding Engine}
+During edge test-time execution, the foundation teacher model is completely detached, and the compact 12.55M Conformer executes independent inference via a two-pass hybrid decoding strategy:
+
+\subsection{Pass 1: CTC Prefix Beam Search}
+Frame-level logit posteriors from the acoustic head are decoded using a CTC prefix beam search algorithm equipped with an 8,333-word vocabulary trie. The beam search maintains tracking of separate blank and non-blank probability paths, generating the top-$K$ candidate word sequences ($K = 8$) with a word insertion bonus $\beta = 0.20$ to penalize premature sequence terminations.
+
+\subsection{Pass 2: Causal Language Model Rescoring}
+The top-$K$ candidate word hypotheses $\mathcal{W} = \{W_1, \dots, W_K\}$ are rescored by evaluating their composite sequence log-likelihood under a causal language model:
+\begin{equation}
+    \text{Score}(W) = \ln P_{\text{CTC}}(W \mid X) + \alpha \sum_{k=1}^{|W|} \ln P_{\text{LM}}(w_k \mid w_1, \dots, w_{k-1})
+\end{equation}
+where $\alpha = 0.40$ establishes a calibrated balance between acoustic acoustic confidence and linguistic fluency.
+
+Because Pass 1 prunes the hypothesis space to just 8 candidate sequences, the causal rescoring step executes in milliseconds, preserving the ultra-fast edge Real-Time Factor of $\text{RTF}_{\text{CPU}} = 0.08$.

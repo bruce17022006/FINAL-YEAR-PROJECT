@@ -1,0 +1,102 @@
+\chapter{SAMPLE SOURCE CODE IMPLEMENTATION}
+\label{app:code}
+
+This Appendix provides clean, representative excerpts of the core algorithmic modules developed for the Wasserstein-guided multi-task distillation framework.
+
+\section{Sinkhorn-Wasserstein Optimal Transport Solver}
+The following module implements the vectorized, GPU-accelerated entropic Optimal Transport loss with cosine ground cost computation:
+
+\begin{singlespace}
+\begin{verbatim}
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class SinkhornWassersteinLoss(nn.Module):
+    """
+    Computes cross-vocabulary entropic Sinkhorn-Wasserstein distance
+    between student acoustic representations and teacher token embeddings.
+    """
+    def __init__(self, epsilon=0.10, max_iter=10):
+        super(SinkhornWassersteinLoss, self).__init__()
+        self.epsilon = epsilon
+        self.max_iter = max_iter
+
+    def forward(self, student_feats, teacher_feats, student_mask=None):
+        # Normalize representations to unit hypersphere
+        s_norm = F.normalize(student_feats, p=2, dim=-1) # (B, N, D)
+        t_norm = F.normalize(teacher_feats, p=2, dim=-1) # (B, M, D)
+
+        # Pairwise Cosine Ground Cost Matrix C_ij = 1 - cos(s_i, t_j)
+        cost_matrix = 1.0 - torch.bmm(s_norm, t_norm.transpose(1, 2)) # (B, N, M)
+        cost_matrix = torch.clamp(cost_matrix, min=0.0, max=2.0)
+
+        B, N, M = cost_matrix.shape
+
+        # Uniform empirical target measures
+        r = torch.ones(B, N, device=student_feats.device) / N
+        c = torch.ones(B, M, device=student_feats.device) / M
+
+        # Exponential Gibbs Kernel
+        kernel = torch.exp(-cost_matrix / self.epsilon) + 1e-9
+
+        # Iterative Sinkhorn-Knopp Matrix Scaling
+        b = torch.ones(B, M, device=student_feats.device) / M
+        for _ in range(self.max_iter):
+            # Row normalization
+            a = r / (torch.bmm(kernel, b.unsqueeze(-1)).squeeze(-1) + 1e-9)
+            # Column normalization
+            b = c / (torch.bmm(kernel.transpose(1, 2), a.unsqueeze(-1)).squeeze(-1) + 1e-9)
+
+        # Optimal Transport Coupling Plan P*
+        P_star = a.unsqueeze(-1) * kernel * b.unsqueeze(1) # (B, N, M)
+
+        # Frobenius Inner Product Loss: <P*, C>
+        ot_loss = torch.sum(P_star * cost_matrix, dim=(-2, -1)).mean()
+        return ot_loss
+\end{verbatim}
+\end{singlespace}
+
+\section{Dual-Head Multi-Task Conformer Architecture}
+The following class defines the multi-task prediction heads and composite loss computation:
+
+\begin{singlespace}
+\begin{verbatim}
+class MultiTaskConformerStudent(nn.Module):
+    def __init__(self, vocab_size=1024, num_emotions=4, hidden_dim=256):
+        super().__init__()
+        self.encoder = ConformerBackbone(input_dim=80, d_model=hidden_dim, 
+                                         num_layers=6, conv_kernel_size=15)
+        self.linear_proj = nn.Linear(hidden_dim, 2048) # Teacher manifold projection
+
+        # ASR Head
+        self.asr_head = nn.Linear(hidden_dim, vocab_size)
+
+        # SER Affective Head
+        self.ser_head = nn.Sequential(
+            nn.Linear(hidden_dim, 128),
+            nn.GELU(),
+            nn.Dropout(0.2),
+            nn.Linear(128, num_emotions)
+        )
+
+    def forward(self, mel_spectrogram, lengths=None):
+        # 4x subsampled Conformer features: (B, T', 256)
+        latents, pad_mask = self.encoder(mel_spectrogram, lengths)
+
+        # Acoustic transcription logits
+        asr_logits = self.asr_head(latents)
+
+        # Temporal mean pooling over unmasked frames for SER
+        if pad_mask is not None:
+            mask_expanded = (~pad_mask).unsqueeze(-1).float()
+            pooled = (latents * mask_expanded).sum(dim=1) / mask_expanded.sum(dim=1).clamp(min=1)
+        else:
+            pooled = latents.mean(dim=1)
+
+        emotion_logits = self.ser_head(pooled)
+        projected_latents = self.linear_proj(latents)
+
+        return asr_logits, emotion_logits, projected_latents
+\end{verbatim}
+\end{singlespace}

@@ -1,0 +1,51 @@
+\chapter{INTRODUCTION}
+\label{ch:intro}
+
+\section{Overview of Spoken Language Processing}
+Spoken language processing constitutes one of the foundational frontiers in artificial intelligence, bridging human acoustic communication and computational linguistic intelligence. The primary objective of Automatic Speech Recognition (ASR) is to transform continuous, time-varying acoustic speech waveforms into accurate orthographic textual representations. Concurrently, Speech Emotion Recognition (SER) endeavors to decode paralinguistic and affective cues—such as anger, joy, sadness, and neutral communicative composure—embedded within the subtle prosodic excursions, pitch modulations, and formant trajectories of human speech. 
+
+In conventional spoken language interfaces, speech transcription and emotion recognition have historically been treated as distinct, disjoint engineering tasks. Acoustic models dedicated to ASR prioritize phoneme discrimination while treating emotional modulations as non-stationary acoustic noise that should be normalized or suppressed. Conversely, affective computing systems frequently operate on isolated acoustic feature descriptors or post-transcription sentiment analysis, losing the intrinsic subword acoustic alignments that govern emotional expression. Developing a unified architecture capable of joint acoustic transcription and paralinguistic state estimation represents a vital leap toward natural, empathetic human-computer interaction.
+
+\section{The Paradox of Modern Foundation Models}
+The landscape of natural language processing has undergone an extraordinary revolution driven by the emergence of generative, autoregressive Large Language Models (LLMs). Contemporary foundation models, trained on trillions of textual tokens, exhibit unmatched syntactic understanding, long-range contextual reasoning, and encyclopedic semantic grounding. Consequently, integrating this immense linguistic competence into acoustic speech recognition decoders has become an active pursuit.
+
+However, a severe architectural paradox impedes the edge deployment of foundation-model-powered speech decoders:
+\begin{enumerate}
+    \item \textbf{Computational Footprint and Memory Wall:} Multi-billion parameter generative decoders require tens of gigabytes of volatile memory and immense floating-point operations per second. Deploying such cumbersome decoders on resource-constrained embedded edge devices, mobile processors, or in low-latency voice assistants creates prohibitive computational overhead, high energy consumption, and intolerable inference latency.
+    \item \textbf{Vocabulary Cardinality and Geometry Mismatch:} Foundational language models operate over massive subword vocabularies optimized for global text generation ($|\mathcal{V}_{\text{teacher}}| > 120{,}000$ subwords). In contrast, efficient non-autoregressive acoustic decoders achieve optimal real-time performance with compact vocabularies ($|\mathcal{V}_{\text{student}}| \approx 1{,}000$ to $5{,}000$ tokens). Direct distribution matching via classical knowledge transfer is fundamentally ill-posed when teacher and student probability simplices occupy mutually disjoint categorical spaces.
+\end{enumerate}
+
+\section{Problem Statement}
+When standard knowledge distillation paradigms are applied across heterogeneous acoustic and linguistic architectures, three major structural failure modes emerge:
+\begin{itemize}
+    \item \textbf{Infeasibility of Divergence-Based Distillation:} Conventional knowledge distillation relies on Kullback-Leibler (KL) divergence or mean-squared error over categorical output logits. These measures strictly require an isomorphic vocabulary space ($\mathcal{V}_{\text{teacher}} = \mathcal{V}_{\text{student}}$). When vocabularies diverge in cardinality and tokenization boundaries, KL divergence collapses because probability distributions share no common geometric support.
+    \item \textbf{Degenerate CTC Blank Attractor Collapse:} Non-autoregressive acoustic decoders trained via Connectionist Temporal Classification (CTC) suffer from a severe frame-to-phoneme oversampling disparity (typically 14:1). Under standard optimization, decoders fall into a pathological local minimum known as \textit{Blank Collapse}, where the network assigns over 90\% of its probability mass to the null transition token ($\pi_\emptyset$), virtually choking valid phonetic emission.
+    \item \textbf{Loss of Nuanced Paralinguistic Cues:} Standard acoustic distillation techniques fail to preserve affective prosody, discarding expressive speech inflections and emotional nuance. Furthermore, ambiguous human conversations—where human annotators themselves disagree on emotional categories—are routinely discarded by existing pipelines, limiting real-world robustness.
+\end{itemize}
+
+\section{Aim and Objectives of the Project}
+
+\subsection{Project Aim}
+The principal aim of this project is to develop an ultra-compact, end-to-end multi-task speech framework that transfers rich linguistic priors from a high-capacity generative language model into an efficient acoustic encoder via Optimal Transport, concurrently achieving robust speech recognition and speech emotion classification with real-time edge viability.
+
+\subsection{Key Objectives}
+To accomplish this aim, the following specific objectives are established:
+\begin{enumerate}
+    \item To design a decimated, lightweight 6-layer Conformer acoustic student backbone ($12.55\text{M}$ parameters) integrated with $4\times$ 2D-convolutional subsampling to neutralize CTC blank collapse while preserving temporal acoustic resolution.
+    \item To formulate a continuous cross-vocabulary distillation bridge using entropic Sinkhorn-Wasserstein Optimal Transport (OT), allowing probability mass to be transported smoothly across mismatched token vocabularies ($|\mathcal{V}_{\text{teacher}}| = 128{,}256$ vs $|\mathcal{V}_{\text{student}}| = 1{,}024$) without heuristic token pruning.
+    \item To implement a frozen foundation teacher dynamic based on an autoregressive language model, ensuring zero runtime LLM memory consumption during edge execution.
+    \item To construct dual decoupled prediction heads—a Connectionist Temporal Classification transcription head and a temporal-mean-pooled affective classification head—optimized via a joint composite loss function.
+    \item To empirically validate the framework on the benchmark LibriSpeech and IEMOCAP corpora, evaluating Word Error Rate (WER), Character Error Rate (CER), Weighted Accuracy (WA), Unweighted Accuracy (UA), and edge Real-Time Factor (RTF).
+    \item To deploy the trained multi-task student as an automated impartial adjudicator over 2,507 ambiguous non-consensus human utterances from the IEMOCAP corpus to resolve human perceptual disagreement.
+\end{enumerate}
+
+\section{Organization of the Report}
+The remainder of this project report is systematically structured into the following chapters:
+\begin{itemize}
+    \item \textbf{Chapter 2 (Literature Survey):} Presents an in-depth review of existing acoustic modeling paradigms, Connectionist Temporal Classification, knowledge distillation methodologies, and five contemporary base papers, identifying critical research gaps.
+    \item \textbf{Chapter 3 (System Study and Feasibility Analysis):} Analyzes existing speech distillation workflows, details technical, operational, and economic feasibility, evaluates the LibriSpeech and IEMOCAP datasets, and presents a SWOT analysis.
+    \item \textbf{Chapter 4 (System Design):} Elaborates the mathematical architecture of the Conformer student, generative teacher, entropic Sinkhorn Optimal Transport formulation, solved numerical matrix illustration, and dual task heads.
+    \item \textbf{Chapter 5 (System Implementation):} Formulates the end-to-end training pipeline, multi-stage distillation workflow, dynamic key-padding masking, and two-pass hybrid decoding strategy.
+    \item \textbf{Chapter 6 (Results and Discussion):} Provides quantitative empirical benchmarks across clean and emotional speech, extensive ablation studies, latency profiles, and the qualitative resolution of ambiguous human discourse.
+    \item \textbf{Chapter 7 (Conclusion and Future Enhancement):} Summarizes the primary contributions of the study and outlines promising directions for future research.
+\end{itemize}

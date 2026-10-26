@@ -1,0 +1,292 @@
+\documentclass[12pt,a4paper]{report}
+
+% ====================================================================
+% MARGINS & TYPOGRAPHY SPECIFICATIONS (AS PER COLLEGE GUIDELINES)
+% Left: 1.5 in, Top: 1.0 in, Bottom: 1.0 in, Right: 1.0 in
+% Font: Times New Roman, 12 pt, 1.5 Line Spacing
+% ====================================================================
+\usepackage[left=1.5in, right=1.0in, top=1.0in, bottom=1.0in]{geometry}
+\usepackage{times}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{{./}{../}}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{tocloft}
+\usepackage[hidelinks]{hyperref}
+\usepackage{cite}
+
+% Captions formatting: Tables on TOP, Figures on BOTTOM
+\captionsetup[table]{position=top, labelfont=bf, textfont=normalfont, skip=6pt}
+\captionsetup[figure]{position=bottom, labelfont=bf, textfont=normalfont, skip=6pt}
+
+% Chapter headings formatting
+\titleformat{\chapter}[DISPLAY]
+  {\normalfont\Large\bfseries\centering}{\chaptertitlename\ \thechapter}{12pt}{\Large\MakeUppercase}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+
+\titleformat{\section}
+  {\normalfont\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+% ====================================================================
+% 1. COVER PAGE & TITLE PAGE
+% ====================================================================
+\begin{titlepage}
+    \centering
+    \vspace*{0.5cm}
+    {\large \bfseries WASSERSTEIN-GUIDED DYNAMIC LLM KNOWLEDGE DISTILLATION TRANSFER FOR EMOTION-AWARE AUTOMATIC SPEECH RECOGNITION \par}
+    
+    \vspace{1.5cm}
+    {\normalsize \textbf{A PROJECT REPORT} \par}
+    \vspace{0.3cm}
+    {\normalsize \textit{Submitted by} \par}
+    \vspace{0.6cm}
+    
+    {\large \bfseries DEEPAK R.G \quad (951421205011) \par}
+    \vspace{0.2cm}
+    {\large \bfseries PURUSHOTHAMAN V \quad (951421205035) \par}
+    
+    \vspace{1.5cm}
+    {\normalsize \textit{in partial fulfillment for the award of the degree of} \par}
+    \vspace{0.4cm}
+    {\large \bfseries BACHELOR OF TECHNOLOGY \par}
+    \vspace{0.2cm}
+    {\normalsize in \par}
+    \vspace{0.2cm}
+    {\large \bfseries ARTIFICIAL INTELLIGENCE AND DATA SCIENCE \par}
+    
+    \vfill
+    \IfFileExists{mepco_logo.png}{\includegraphics[width=3.2cm]{mepco_logo.png}}{\IfFileExists{../mepco_logo.png}{\includegraphics[width=3.2cm]{../mepco_logo.png}}{\vspace{2.5cm}}} \par
+    \vspace{0.5cm}
+    
+    {\large \bfseries DEPARTMENT OF ARTIFICIAL INTELLIGENCE AND DATA SCIENCE \par}
+    \vspace{0.2cm}
+    {\large \bfseries MEPCO SCHLENK ENGINEERING COLLEGE \par}
+    {\normalsize \textbf{(An Autonomous Institution, Affiliated to Anna University, Chennai)} \par}
+    {\normalsize \textbf{SIVAKASI - 626 005, TAMIL NADU, INDIA} \par}
+    \vspace{0.5cm}
+    {\normalsize \bfseries APRIL 2026 \par}
+\end{titlepage}
+
+% ====================================================================
+% 2. BONAFIDE CERTIFICATE (14pt, Double Spacing)
+% ====================================================================
+\newpage
+\thispagestyle{empty}
+\begin{doublespacing}
+\begin{center}
+    {\fontsize{14pt}{18pt}\selectfont \bfseries MEPCO SCHLENK ENGINEERING COLLEGE, SIVAKASI \par}
+    {\fontsize{12pt}{16pt}\selectfont \textbf{(An Autonomous Institution, Affiliated to Anna University, Chennai)} \par}
+    \vspace{0.4cm}
+    {\fontsize{14pt}{18pt}\selectfont \bfseries DEPARTMENT OF ARTIFICIAL INTELLIGENCE AND DATA SCIENCE \par}
+    \vspace{0.8cm}
+    {\fontsize{14pt}{18pt}\selectfont \bfseries BONAFIDE CERTIFICATE \par}
+\end{center}
+
+\vspace{0.4cm}
+\noindent Certified that this project report titled \textbf{``WASSERSTEIN-GUIDED DYNAMIC LLM KNOWLEDGE DISTILLATION TRANSFER FOR EMOTION-AWARE AUTOMATIC SPEECH RECOGNITION''} is the bonafide work of \textbf{DEEPAK R.G} and \textbf{PURUSHOTHAMAN V} who carried out the project work under my supervision.
+
+\vspace{2.5cm}
+
+\noindent
+\begin{tabular}{p{7.5cm}p{7.5cm}}
+    \textbf{SIGNATURE} & \textbf{SIGNATURE} \\[1.8cm]
+    \textbf{Dr. K. THIRUMOORTHY, B.E., M.E., Ph.D.} & \textbf{HEAD OF THE DEPARTMENT} \\
+    \textbf{SUPERVISOR} & Department of Artificial Intelligence \\
+    Professor, & and Data Science, \\
+    Department of Artificial Intelligence & Mepco Schlenk Engineering College, \\
+    and Data Science, & Sivakasi - 626 005. \\
+    Mepco Schlenk Engineering College, & \\
+    Sivakasi - 626 005. & 
+\end{tabular}
+
+\vspace{1.0cm}
+\noindent Submitted for the Project Viva-Voce examination held on \rule{4.5cm}{0.4pt}.
+
+\vspace{1.5cm}
+\noindent
+\begin{tabular}{p{7.5cm}p{7.5cm}}
+    \textbf{INTERNAL EXAMINER} & \textbf{EXTERNAL EXAMINER}
+\end{tabular}
+\end{doublespacing}
+
+% ====================================================================
+% 3. ABSTRACT (1 Page Synopsis)
+% ====================================================================
+\newpage
+\pagenumbering{roman}
+\setcounter{page}{3}
+\begin{center}
+    {\Large \bfseries ABSTRACT \par}
+\end{center}
+\vspace{0.5cm}
+
+Automatic Speech Recognition (ASR) deployed in real-time edge environments faces severe bottlenecks in maintaining transcription fidelity under emotional stress while capturing paralinguistic tone. Although foundational causal Large Language Models (LLMs) encode rich linguistic syntax and world knowledge, distilling this knowledge to compact acoustic front-ends suffers from an extreme $125\times$ vocabulary cardinality mismatch ($|\mathcal{V}_{\text{teacher}}| = 128{,}256$ vs $|\mathcal{V}_{\text{student}}| = 1{,}024$), rendering standard Kullback-Leibler (KL) divergence fundamentally inapplicable. Furthermore, non-autoregressive Connectionist Temporal Classification (CTC) decoders frequently collapse into degenerate blank-token attractors due to a 14:1 acoustic-phoneme frame oversampling disparity.
+
+To eliminate these theoretical and operational limitations, this project develops an end-to-end multi-task framework that transfers continuous causal linguistic priors from a frozen $1.2\text{B}$-parameter foundation LLM into an ultra-compact $12.55\text{M}$-parameter Conformer student via entropic Sinkhorn-Wasserstein Optimal Transport (OT). By modeling cross-vocabulary alignment as continuous probability mass transportation over cosine-normalized semantic manifolds, the system bypasses heuristic string discard rules, eliminates heavy projection layers, and acts as an implicit lexical anchor that suppresses blank over-allocation. The unified latent representation simultaneously powers non-autoregressive transcription and 4-class Speech Emotion Recognition (SER) via decoupled prediction heads.
+
+Extensive empirical evaluations across the LibriSpeech and IEMOCAP corpora confirm that the proposed $12.55\text{M}$ Conformer achieves a Word Error Rate (WER) of 37.5\% on clean speech (a 45.2\% relative improvement over unregularized CTC) and an Unweighted Accuracy (UA) of 59.97\% on held-out emotional dialogue, while operating at a Real-Time Factor of $\text{RTF}_{\text{CPU}} = 0.08$ on commodity CPU hardware ($12.5\times$ faster than real-time). Crucially, deploying the distilled model as an automated adjudicator across 2,507 ambiguous non-consensus human utterances from the IEMOCAP corpus yields a 72.72\% Human-AI consensus rate, resolving real-world human perceptual ambiguity.
+
+% ====================================================================
+% 4. PRELIMINARY LISTS
+% ====================================================================
+\newpage
+\tableofcontents
+
+\newpage
+\listoftables
+
+\newpage
+\listoffigures
+
+\newpage
+\chapter*{LIST OF SYMBOLS, ABBREVIATIONS AND NOMENCLATURE}
+\addcontentsline{toc}{chapter}{LIST OF SYMBOLS, ABBREVIATIONS AND NOMENCLATURE}
+
+\begin{longtable}{p{2.5cm}p{12cm}}
+\textbf{AED} & Attention-based Encoder-Decoder \\
+\textbf{ASR} & Automatic Speech Recognition \\
+\textbf{BPE} & Byte-Pair Encoding \\
+\textbf{CER} & Character Error Rate \\
+\textbf{CMVN} & Cepstral Mean and Variance Normalization \\
+\textbf{CTC} & Connectionist Temporal Classification \\
+\textbf{EOT} & Entropic Optimal Transport \\
+\textbf{GLU} & Gated Linear Unit \\
+\textbf{HMM} & Hidden Markov Model \\
+\textbf{IEMOCAP} & Interactive Emotional Dyadic Motion Capture \\
+\textbf{KD} & Knowledge Distillation \\
+\textbf{KL} & Kullback-Leibler (Divergence) \\
+\textbf{LLM} & Large Language Model \\
+\textbf{LOSO} & Leave-One-Session-Out \\
+\textbf{MHSA} & Multi-Head Self-Attention \\
+\textbf{MLP} & Multi-Layer Perceptron \\
+\textbf{OT} & Optimal Transport \\
+\textbf{PEFT} & Parameter-Efficient Fine-Tuning \\
+\textbf{RTF} & Real-Time Factor \\
+\textbf{SDG} & Sustainable Development Goals \\
+\textbf{SER} & Speech Emotion Recognition \\
+\textbf{SWD} & Sinkhorn-Wasserstein Distance \\
+\textbf{UA} & Unweighted Accuracy \\
+\textbf{WA} & Weighted Accuracy \\
+\textbf{WER} & Word Error Rate \\
+$\mathcal{V}_{\text{teacher}}$ & Teacher Vocabulary Lexicon ($128{,}256$ subwords) \\
+$\mathcal{V}_{\text{student}}$ & Student Subword Vocabulary ($1{,}024$ BPE tokens) \\
+$C_{ij}$ & Ground Cost Metric between token $i$ and token $j$ \\
+$P^*$ & Optimal Transport Coupling Plan Matrix \\
+$\gamma$ & Entropic Regularization Coefficient ($\gamma = 0.10$) \\
+$\mathcal{L}_{\text{total}}$ & Composite Multi-Task Optimization Loss \\
+$\lambda_{\text{OT}}$ & Optimal Transport Distillation Weight ($\lambda_{\text{OT}} = 0.1$) \\
+$\lambda_{\text{emo}}$ & Affective Classification Weight ($\lambda_{\text{emo}} = 0.2$) \\
+$\pi_\emptyset$ & CTC Null/Blank Token Attractor Probability \\
+\end{longtable}
+
+% ====================================================================
+% MAIN CHAPTERS (ARABIC NUMERALS)
+% ====================================================================
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\include{chapters/ch1_introduction}
+\include{chapters/ch2_literature_survey}
+\include{chapters/ch3_system_study}
+\include{chapters/ch4_system_design}
+\include{chapters/ch5_implementation}
+\include{chapters/ch6_results}
+\include{chapters/ch7_conclusion}
+
+% ====================================================================
+% APPENDICES
+% ====================================================================
+\appendix
+\include{appendices/appendix_a_environment}
+\include{appendices/appendix_b_code}
+\include{appendices/appendix_c_sdg_swot}
+
+% ====================================================================
+% REFERENCES
+% ====================================================================
+\newpage
+\begin{center}
+    {\Large \bfseries REFERENCES \par}
+\end{center}
+\vspace{1.0cm}
+
+\begin{singlespace}
+\noindent Antoniou, N., Katsamanis, A., Giannakopoulos, T. and Narayanan, S. (2023), `Designing and Evaluating Speech Emotion Recognition Systems: A Reality Check Case Study with IEMOCAP', \textit{Language Resources and Evaluation}, Vol. 57, pp. 1105--1132.
+
+\vspace{0.4cm}
+\noindent Baevski, A., Zhou, Y., Mohamed, A. and Auli, M. (2020), `wav2vec 2.0: A Framework for Self-Supervised Learning of Speech Representations', \textit{Advances in Neural Information Processing Systems (NeurIPS)}, Vol. 33, pp. 12449--12460.
+
+\vspace{0.4cm}
+\noindent Busso, C., Bulut, M., Lee, C.C., Kazemzadeh, A., Mower, E., Kim, S., Chang, J.N., Lee, S. and Narayanan, S.S. (2008), `IEMOCAP: Interactive Emotional Dyadic Motion Capture Database', \textit{Language Resources and Evaluation}, Vol. 42, No. 4, pp. 335--359.
+
+\vspace{0.4cm}
+\noindent Chan, W., Jaitly, N., Le, Q. and Vinyals, O. (2016), `Listen, Attend and Spell: A Neural Network for Large Vocabulary Conversational Speech Recognition', \textit{Proc. IEEE ICASSP}, pp. 4960--4964.
+
+\vspace{0.4cm}
+\noindent Cuturi, M. (2013), `Sinkhorn Distances: Lightspeed Computation of Optimal Transport', \textit{Advances in Neural Information Processing Systems (NeurIPS)}, Vol. 26, pp. 2292--2300.
+
+\vspace{0.4cm}
+\noindent Deng, K., Cao, S., Zhang, Y. and Ma, L. (2022), `Improving CTC-Based Speech Recognition via Knowledge Transferring from Pre-Trained Language Models', \textit{Proc. IEEE ICASSP}, pp. 8517--8521.
+
+\vspace{0.4cm}
+\noindent Dubey, A., Jauhri, A., Pandey, A., Kadian, A., Al-Dahle, A., Letman, A., Mathur, A., Schelten, A. and Yang, A. (2024), `The Llama 3 Herd of Models', \textit{arXiv preprint arXiv:2407.21783}.
+
+\vspace{0.4cm}
+\noindent Eeckt, S.V. and Hamme, H.V. (2026), `Efficient Rehearsal for Continual Learning in ASR via Singular Value Tuning', \textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, Vol. 34, pp. 1420--1432.
+
+\vspace{0.4cm}
+\noindent Futami, H. and Kawahara, T. (2026), `Distilling the Knowledge of LLMs for Automatic Speech Recognition', \textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, Vol. 34, pp. 2962--2971.
+
+\vspace{0.4cm}
+\noindent Graves, A., Fernandez, S., Gomez, F. and Schmidhuber, J. (2006), `Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks', \textit{Proc. 23rd International Conference on Machine Learning (ICML)}, pp. 369--376.
+
+\vspace{0.4cm}
+\noindent Graves, A. (2012), `Sequence Transduction with Recurrent Neural Networks', \textit{arXiv preprint arXiv:1211.3711}.
+
+\vspace{0.4cm}
+\noindent Gulati, A., Qin, J., Chiu, C.C., Parmar, N., Zhang, Y., Yu, J., Han, W., Wang, S., Zhang, Z. and Pang, R. (2020), `Conformer: Convolution-Augmented Transformer for Speech Recognition', \textit{Proc. Interspeech}, pp. 5036--5040.
+
+\vspace{0.4cm}
+\noindent Liu, F., Fu, Z. and Wang, Y. (2025), `Reward-Based Gradient Modulation for Multimodal Emotion Recognition with LoRA', \textit{IEEE Transactions on Computational Social Systems}, Vol. 12, No. 5, pp. 3301--3310.
+
+\vspace{0.4cm}
+\noindent Panayotov, V., Chen, G., Povey, D. and Khudanpur, S. (2015), `LibriSpeech: An ASR Corpus Based on Public Domain Audio Books', \textit{Proc. IEEE ICASSP}, pp. 5206--5210.
+
+\vspace{0.4cm}
+\noindent Pepino, L., Riera, P. and Ferrer, L. (2021), `Emotion Recognition from Speech Using wav2vec 2.0 Embeddings', \textit{Proc. Interspeech}, pp. 3400--3404.
+
+\vspace{0.4cm}
+\noindent Peyre, G. and Cuturi, M. (2019), `Computational Optimal Transport: With Applications to Data Science', \textit{Foundations and Trends in Machine Learning}, Vol. 11, No. 5-6, pp. 355--607.
+
+\vspace{0.4cm}
+\noindent Shome, D. and Etemad, A. (2024), `Speech Emotion Recognition with Distilled Prosodic and Linguistic Affect Representations', \textit{Proc. IEEE ICASSP}, pp. 11976--11980.
+
+\vspace{0.4cm}
+\noindent Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, L. and Polosukhin, I. (2017), `Attention Is All You Need', \textit{Advances in Neural Information Processing Systems (NeurIPS)}, Vol. 30, pp. 5998--6008.
+
+\vspace{0.4cm}
+\noindent Zhao, Z., Zhu, X., Wang, X., Wang, S., Geng, X., Tian, W. and Xie, L. (2026), `Steering Language Model to Stable Speech Emotion Recognition via Contextual Perception and Chain of Thought', \textit{IEEE/ACM Transactions on Audio, Speech, and Language Processing}, Vol. 34, pp. 3110--3123.
+\end{singlespace}
+
+\end{document}
