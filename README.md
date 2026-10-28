@@ -157,4 +157,4 @@ If you utilize this codebase or framework for your academic research, please cit
 ```
 
 ---
-*Developed with ❤️ by Deepak R.G & Purushothaman V under the supervision of Dr. K. Thirumoorthy.*
+*Developed with  by Deepak R.G & Purushothaman V under the supervision of Dr. K. Thirumoorthy.*
