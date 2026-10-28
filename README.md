@@ -144,17 +144,5 @@ python analyze_ambiguous_emotions.py
 ```
 
 ---
-
-## 📜 Citation & Academic Reference
-If you utilize this codebase or framework for your academic research, please cite:
-```bibtex
-@article{deepak2026wasserstein,
-  title={Wasserstein-Guided Dynamic LLM Distillation for Emotion-Aware Automatic Speech Recognition},
-  author={Dr. K. Thirumoorthy and Deepak, R. G. and Purushothaman, V.},
-  journal={Department of Artificial Intelligence and Data Science, Mepco Schlenk Engineering College},
-  year={2026}
-}
-```
-
 ---
 *Developed with  by Deepak R.G & Purushothaman V under the supervision of Dr. K. Thirumoorthy.*
