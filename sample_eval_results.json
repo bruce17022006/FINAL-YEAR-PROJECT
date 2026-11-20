@@ -1,0 +1,116 @@
+[
+  {
+    "emotion_target": "Happy",
+    "utterance_id": "Ses05F_impro03_F000",
+    "ground_truth_text": "Okay, so big news.",
+    "predicted_text": "B IS",
+    "ground_truth_emotion": "Happy",
+    "predicted_emotion": "Happy",
+    "confidence_pct": 55.2,
+    "emotion_distribution": {
+      "Neutral": 36.2,
+      "Angry": 1.1,
+      "Sad": 7.5,
+      "Happy": 55.2
+    },
+    "ctc_loss": 5.0097,
+    "cer_pct": 83.33,
+    "wer_pct": 100.0,
+    "dataset_benchmark_ua_pct": 59.97,
+    "dataset_benchmark_wa_pct": 57.7,
+    "sample_emotion_match": true,
+    "human_evaluator_votes": null
+  },
+  {
+    "emotion_target": "Sad",
+    "utterance_id": "Ses05F_impro02_F001",
+    "ground_truth_text": "um.",
+    "predicted_text": "",
+    "ground_truth_emotion": "Sad",
+    "predicted_emotion": "Sad",
+    "confidence_pct": 88.4,
+    "emotion_distribution": {
+      "Neutral": 10.6,
+      "Angry": 0.0,
+      "Sad": 88.4,
+      "Happy": 1.0
+    },
+    "ctc_loss": 5.0562,
+    "cer_pct": 100.0,
+    "wer_pct": 100.0,
+    "dataset_benchmark_ua_pct": 59.97,
+    "dataset_benchmark_wa_pct": 57.7,
+    "sample_emotion_match": true,
+    "human_evaluator_votes": null
+  },
+  {
+    "emotion_target": "Angry",
+    "utterance_id": "Ses05F_impro01_F017",
+    "ground_truth_text": "Isn't there anything you can do?  Just call over and ask them if I can go to the front of the line in the other line.",
+    "predicted_text": "' ANYTHING YOU CAN DO JUST CALL AS SOME CAN B THE FAL AND THE DOES",
+    "ground_truth_emotion": "Angry",
+    "predicted_emotion": "Happy",
+    "confidence_pct": 43.9,
+    "emotion_distribution": {
+      "Neutral": 35.4,
+      "Angry": 3.7,
+      "Sad": 17.0,
+      "Happy": 43.9
+    },
+    "ctc_loss": 3.1554,
+    "cer_pct": 52.14,
+    "wer_pct": 69.23,
+    "dataset_benchmark_ua_pct": 59.97,
+    "dataset_benchmark_wa_pct": 57.7,
+    "sample_emotion_match": false,
+    "human_evaluator_votes": null
+  },
+  {
+    "emotion_target": "Neutral",
+    "utterance_id": "Ses05F_impro01_F000",
+    "ground_truth_text": "Hi, I need an ID.",
+    "predicted_text": "MAY DO",
+    "ground_truth_emotion": "Neutral",
+    "predicted_emotion": "Sad",
+    "confidence_pct": 70.3,
+    "emotion_distribution": {
+      "Neutral": 19.4,
+      "Angry": 0.5,
+      "Sad": 70.3,
+      "Happy": 9.8
+    },
+    "ctc_loss": 5.9473,
+    "cer_pct": 82.35,
+    "wer_pct": 100.0,
+    "dataset_benchmark_ua_pct": 59.97,
+    "dataset_benchmark_wa_pct": 57.7,
+    "sample_emotion_match": false,
+    "human_evaluator_votes": null
+  },
+  {
+    "emotion_target": "Ambiguous (xxx)",
+    "utterance_id": "Ses05F_impro01_M001",
+    "ground_truth_text": "I mean, there's really nothing I can do for you in this line.  This is not the line for new I.D.  This is the line for registration.",
+    "predicted_text": "M S REM RE OF MAT THREE IN THE L BUS IT THIS NOT THE L FROM THAT IS L FOR FATION",
+    "ground_truth_emotion": "xxx",
+    "predicted_emotion": "Neutral",
+    "confidence_pct": 72.9,
+    "emotion_distribution": {
+      "Neutral": 72.9,
+      "Angry": 4.8,
+      "Sad": 7.4,
+      "Happy": 14.9
+    },
+    "ctc_loss": 3.8292,
+    "cer_pct": 57.58,
+    "wer_pct": 81.48,
+    "dataset_benchmark_ua_pct": 59.97,
+    "dataset_benchmark_wa_pct": 57.7,
+    "sample_emotion_match": "AI Consensus Reached",
+    "human_evaluator_votes": [
+      "frustration",
+      "neutral",
+      "other"
+    ]
+  }
+]

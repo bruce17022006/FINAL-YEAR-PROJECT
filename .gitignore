@@ -21,5 +21,26 @@ checkpoints_*/
 __pycache__/
 *.pyc
 
+# Unrelated projects
+story2video/
+
+# Project Reports & Generated Documents
+Final_Year_Project_Report.docx
+report/
+build_word_report.py
+append_source_code_word.py
+append_system_reqs_word.py
+update_references_in_word.py
+
+# Publication & Architecture Figures
+fig*.png
+fig_*.png
+module*.png
+*.drawio
+generate_all_15_figures_bw.py
+generate_drawio_diagrams.py
+generate_module_pngs.py
+generate_sequence_diagram.py
+
 # Temporary text dumps
 train_transcripts.txt

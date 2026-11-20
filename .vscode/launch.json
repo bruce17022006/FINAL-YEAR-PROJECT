@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch Streamlit Web App",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "streamlit",
+      "args": [
+        "run",
+        "${workspaceFolder}/streamlit_app.py",
+        "--server.port",
+        "8501"
+      ],
+      "jinja": true,
+      "justMyCode": true
+    },
+    {
+      "name": "Run Evaluation (5 Samples)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/run_selected_5_samples.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
